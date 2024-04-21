@@ -5,5 +5,7 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("hallo my friendo");
         System.out.println("commit denemesi betül ");
+        System.out.println("elif was here");
+        System.out.println("lalalala");
         }
     }
