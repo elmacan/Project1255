@@ -6,6 +6,7 @@ public class Main {
         System.out.println("hallo my friendo");
         //System.out.println("commit denemesi betül ");
         System.out.println("repository deneme");
+        System.out.println("github desktop deneme");
 
         }
     }
