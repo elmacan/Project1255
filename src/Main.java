@@ -7,6 +7,7 @@ public class Main {
         //System.out.println("commit denemesi betül ");
         System.out.println("repository deneme");
         System.out.println("github desktop deneme");
+        System.out.println("elif was here");
 
         }
     }
