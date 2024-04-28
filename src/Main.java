@@ -9,6 +9,7 @@ public class Main {
         System.out.println("github desktop deneme");
         System.out.println("elif was here");
         System.out.println("eceeeeeee");
+        System.out.println("eceeeeeee deneme 2");
 
 
         }
