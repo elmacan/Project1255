@@ -1,5 +1,5 @@
-public class Task extends Jobs{
-    private int tasktypeID;
+public class Task extends Job{
+    private int tasktype;
     private int taskSize;
 
 
