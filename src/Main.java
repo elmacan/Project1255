@@ -10,9 +10,6 @@ public class Main {
         System.out.println("repository deneme");
         System.out.println("github desktop deneme");
         System.out.println("elif was here");
-        System.out.println("eceeeeeeee");
-        System.out.println("eceeeeeeee deneme 2");
-
 
         String workFileName = args[0];
         String jobFileName = args[1];
