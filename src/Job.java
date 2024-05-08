@@ -9,6 +9,15 @@ public class Job {
         this.jobType = jobType;
         this.tasks = tasks;
     }
+    public double getDuration(){
+        return this.duration;
+    }
+    public String getJobType(){
+        return this.jobType;
+    }
+    public ArrayList<Task> getTasks(){
+        return this.tasks;
+    }
 
 
 }
