@@ -20,5 +20,5 @@ public class Station {
     public double getSpeed(){
         return this.speed;
     }
-    pub
+
 }

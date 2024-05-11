@@ -1,40 +1,70 @@
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.Scanner;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        System.out.println("hallo my friendo");
-        //System.out.println("commit denemesi betül ");
-        System.out.println("repository deneme");
-        System.out.println("github desktop deneme");
-        System.out.println("elif was here");
 
+        if (args.length != 2) {
+            System.out.println("Error: Please provide exactly two file names.");
+            return;
+        }
         String workFileName = args[0];
         String jobFileName = args[1];
+        fileControl(workFileName, jobFileName);
 
+    }
+
+
+    public static void fileControl(String workFileName, String jobFileName) {
         File workFlowFile = new File(workFileName);
         File jobFile = new File(jobFileName);
+        Scanner workScanner = null;
+        Scanner jobScanner = null;
+        boolean errorOccured = false;
+
+
         try {
             if (!workFlowFile.exists() || !workFlowFile.canRead()) {
-                throw new IOException("File doesn't exists or is not readable!" + workFileName);
+                throw new IOException(workFileName + " doesn't exists or is not readable!");
+
             }
-        }catch (IOException e){
+        } catch (IOException e) {
             System.out.println(e.getMessage());
+            errorOccured = true;
 
         }
         try {
             if (!jobFile.exists() || !jobFile.canRead()) {
-                throw new IOException("File doesn't exists or is not readable!" + jobFileName);
+                throw new IOException(jobFileName + " doesn't exists or is not readable!");
             }
-        }catch (IOException e){
+        } catch (IOException e) {
             System.out.println(e.getMessage());
+            errorOccured = true;
 
         }
-        System.out.println("ece yeni deneme");
 
+        if (errorOccured == true) {
+            System.exit(1);
+        }
+
+
+        try {
+            workScanner = new Scanner(workFlowFile);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        while (workScanner.hasNextLine()) {
+            String line = workScanner.nextLine();
+            System.out.println("Line: " + line);
+        }
 
 
     }
 }
+
+
+
