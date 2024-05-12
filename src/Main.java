@@ -64,11 +64,44 @@ public class Main {
             throw new RuntimeException(e);
         }
 
+
         while (workScanner.hasNextLine()) {
             String line = workScanner.nextLine();
             System.out.println("Line: " + line);
-        }
+            String[] parts=line.split(" ");
 
+            switch (parts[0]) {
+                case "(TASKTYPES":
+                    parseTaskTypes(parts);
+                    break;
+                case "(JOBTYPES":
+                    // parseJobTypes(parts);
+                    break;
+                case "(STATIONS":
+                    //parseStations(parts);
+                    break;
+                default:
+                    System.out.println("Syntax error in titles");
+            }
+        }
+    }
+
+
+
+
+
+
+
+    //stationID strings must start with a letter
+    //followed by more letters and/or digits or underscore character ‘_’.
+
+    public static void parseTaskTypes(String[] parts){
+
+        for(int i=1;i< parts.length;i++){
+            System.out.println("parts i:"+i+"  "+parts[i]);
+
+
+        }
 
     }
 
