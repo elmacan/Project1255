@@ -2,6 +2,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,6 +34,7 @@ public class Main {
         Scanner jobScanner = null;
         boolean errorOccured = false;
 
+        ArrayList<Task> taskTypesInText = new ArrayList<Task>();
 
         try {
             if (!workFlowFile.exists() || !workFlowFile.canRead()) {
@@ -95,13 +98,16 @@ public class Main {
     //stationID strings must start with a letter
     //followed by more letters and/or digits or underscore character ‘_’.
 
-    public static void parseTaskTypes(String[] parts){
+    public static void parseTaskTypes(String[] parts){   //0 tasktype yazan eleman
 
         for(int i=1;i< parts.length;i++){
             System.out.println("parts i:"+i+"  "+parts[i]);
-
+        }
+        int indexCount=1;
+        while(!hasClosingParenthesisAtLast(parts[indexCount])){
 
         }
+
 
     }
 
@@ -132,6 +138,31 @@ public class Main {
         Matcher matcher = pattern.matcher(str);
 
         // Check if the string matches the condition
+        return matcher.matches();
+    }
+
+    public static boolean iscontainsClosingParenthesis(String str) {
+
+        return str.indexOf(')') != -1;
+    }
+    public static boolean hasClosingParenthesisAtLast(String str) {
+        char lastChar = str.charAt(str.length() - 1);
+        if(lastChar == ')')return true;
+
+        return false;
+    }
+
+    public static boolean isValidTaskTypesLineFormat(String str) {
+        // Regular expression to match the format
+        String regex = "\\(TASKTYPES ([a-zA-Z]\\w*\\s*(\\.\\d+)?\\s*)+\\)";
+
+        // Compile the regular expression
+        Pattern pattern = Pattern.compile(regex);
+
+        // Create matcher object
+        Matcher matcher = pattern.matcher(str);
+
+        // Check if the string matches the format
         return matcher.matches();
     }
 
