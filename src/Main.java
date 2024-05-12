@@ -3,6 +3,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class Main {
@@ -69,6 +71,39 @@ public class Main {
 
 
     }
+
+
+    public static boolean isValidID(String id){
+
+        String regex = "^[a-zA-Z][a-zA-Z0-9_]*$";
+
+        // Compile the regular expression
+        Pattern pattern = Pattern.compile(regex);
+
+        // Create matcher object
+        Matcher matcher = pattern.matcher(id);
+
+        // Check if the string matches the condition
+        return matcher.matches();
+
+
+    }
+    public static boolean isNumber(String str) {
+        // Regular expression to match numbers (integer or decimal)
+        String regex = "^-?\\d*\\.?\\d+$";
+
+        // Compile the regular expression
+        Pattern pattern = Pattern.compile(regex);
+
+        // Create matcher object
+        Matcher matcher = pattern.matcher(str);
+
+        // Check if the string matches the condition
+        return matcher.matches();
+    }
+
+
+
 }
 
 
