@@ -7,6 +7,49 @@ public class Task {
     private String status;  //wait,execute,complete
 
 
+    public Task(){
+
+    }
+    public Task(String taskType, double taskSize, double duration, String stationID, String status) {
+        this.taskType = taskType;
+        this.taskSize = taskSize;
+        this.duration = duration;
+        this.stationID = stationID;
+        this.status = status;
+    }
+    /* while (workScanner.hasNextLine()) {
+            String line = workScanner.nextLine();
+            System.out.println("Line: " + line);
+            String[] parts = line.split(" ");
+
+            switch (parts[0]) {
+                case "(TASKTYPES":
+                    //parseTaskTypes(parts);
+                    break;
+                case "(JOBTYPES":
+                    // parseJobTypes(parts);
+                    break;
+                case "(STATIONS":
+                    //parseStations(parts);
+                    break;
+                default:
+                    System.out.println("Syntax error in titles");
+            }
+        }*/
+    public void parseTaskTypes(String[] parts) {   //0 tasktype yazan eleman
+        Validator validator = new Validator();
+
+        ArrayList<Task> taskTypesInText = new ArrayList<Task>();
+        System.out.println("taskparts");
+        for (int i = 1; i < parts.length; i++) {
+
+            System.out.println(parts[i]);
+
+
+
+        }
+    }
+
     public String getTaskType() {
         return taskType;
     }

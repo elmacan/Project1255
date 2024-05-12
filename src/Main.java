@@ -21,7 +21,7 @@ public class Main {
         fileControl(workFileName, jobFileName);
 
 
-        int currentTime=0;
+        int currentTime = 0;
 
         //event queue yapılcak
 
@@ -34,8 +34,12 @@ public class Main {
         Scanner workScanner = null;
         Scanner jobScanner = null;
         boolean errorOccured = false;
+        isCorrectWorkFileFormat(workFlowFile);
 
-        ArrayList<Task> taskTypesInText = new ArrayList<Task>();
+
+        ArrayList<Job> jobTypesInText = new ArrayList<Job>();
+        ArrayList<Station> stationsInText = new ArrayList<Station>();
+
 
         try {
             if (!workFlowFile.exists() || !workFlowFile.canRead()) {
@@ -62,21 +66,26 @@ public class Main {
         }
 
 
-        try {
+       /* try {
             workScanner = new Scanner(workFlowFile);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
 
+        //sets the delimiter to the end of the file (\\Z), and then reads the entire content of the file into a string.
+        String fullWorkFileText=workScanner.useDelimiter("\\Z").next();
+        System.out.println(fullWorkFileText);*/
 
-        while (workScanner.hasNextLine()) {
+       /* while (workScanner.hasNextLine()) {
             String line = workScanner.nextLine();
             System.out.println("Line: " + line);
-            String[] parts=line.split(" ");
+
+            String[] parts = line.split(" ");
 
             switch (parts[0]) {
                 case "(TASKTYPES":
-                    parseTaskTypes(parts);
+                   Task task=new Task();
+                   task.parseTaskTypes(parts);
                     break;
                 case "(JOBTYPES":
                     // parseJobTypes(parts);
@@ -87,29 +96,24 @@ public class Main {
                 default:
                     System.out.println("Syntax error in titles");
             }
-        }
+        }*/
     }
 
+    public static boolean isCorrectWorkFileFormat(File workFlowFile){
+        try {
+            Scanner workScanner=new Scanner(workFlowFile);
+            //sets the delimiter to the end of the file (\\Z), and then reads the entire content of the file into a string.
+            String content = workScanner.useDelimiter("\\Z").next();
+            String taskTypesPattern = "TASKTYPES\\s*\\((.*)\\)";
+            String jobTypesPattern = "JOBTYPES\\s*\\((.*)\\)";
+            String stationsPattern = "STATIONS\\s*\\((.*)\\)";
 
-
-    //stationID strings must start with a letter
-    //followed by more letters and/or digits or underscore character ‘_’.
-
-    public static void parseTaskTypes(String[] parts){   //0 tasktype yazan eleman
-        Validator validator=new Validator();
-        for(int i=1;i< parts.length;i++){
-            System.out.print("parts i:"+i+"  "+parts[i]);
-
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
         }
-
-
-
-
+        return true;
     }
-
 
 
 }
-
-
 
