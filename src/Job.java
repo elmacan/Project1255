@@ -1,23 +1,87 @@
 import java.util.ArrayList;
 
 public class Job {
-    protected double duration;
-    protected String jobType;
-    protected ArrayList<Task> tasks=new ArrayList<Task>();
-    public  Job(double duration, String jobType, ArrayList<Task> tasks){
-        this.duration = duration;
+    private String jobID; //Job1 , Job2 olan
+    private String jobType; //J1,J2 olan
+    private ArrayList<Task> tasks=new ArrayList<Task>();  //each job type is a sequence of tasks that must be executed one at a time
+    private int currentTaskIndex;
+    //The next task in sequence for that job cannot start before the current one finishes.
+    private int duration;  //Each job has a duration (minutes) in which it must be completed once it arrives.
+    private int startTime;
+    private int deadline; // =duration+startTime
+    private int completeTime; //job ın complete olduğu zaman
+    private String status;
+
+
+    public String getJobID() {
+        return jobID;
+    }
+
+    public void setJobID(String jobID) {
+        this.jobID = jobID;
+    }
+
+    public String getJobType() {
+        return jobType;
+    }
+
+    public void setJobType(String jobType) {
         this.jobType = jobType;
+    }
+
+    public ArrayList<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(ArrayList<Task> tasks) {
         this.tasks = tasks;
     }
-    public double getDuration(){
-        return this.duration;
-    }
-    public String getJobType(){
-        return this.jobType;
-    }
-    public ArrayList<Task> getTasks(){
-        return this.tasks;
+
+    public int getCurrentTaskIndex() {
+        return currentTaskIndex;
     }
 
+    public void setCurrentTaskIndex(int currentTaskIndex) {
+        this.currentTaskIndex = currentTaskIndex;
+    }
 
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public int getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(int startTime) {
+        this.startTime = startTime;
+    }
+
+    public int getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(int deadline) {
+        this.deadline = deadline;
+    }
+
+    public int getCompleteTime() {
+        return completeTime;
+    }
+
+    public void setCompleteTime(int completeTime) {
+        this.completeTime = completeTime;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }
