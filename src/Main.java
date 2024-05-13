@@ -114,27 +114,31 @@ public class Main {
                     }
                     continue;
                 } else if (line.startsWith("(JOBTYPES")) {
-                    do {
+                    while(!(line.startsWith("(STATIONS"))) {
                         line = workScanner.nextLine();
-                        System.out.println("job içi line: "+line);
+                        System.out.println("line: "+line);
                         String splittedline = line.replaceAll("\\s", "");//boşlukları çıkarıyor
+                        if(splittedline.matches("^\\((\\w[.]?)*\\)\\)$"))break;
                         jobTypesFound = true;
                         if ( !((splittedline.matches("^\\((\\w[.]?)*\\)$")) || (splittedline.matches("^\\((\\w[.]?)*\\)\\)$")) )) {
                             System.out.println("Error: Invalid format in JOBTYPES section.");
                             return false;
                         }
-                        }while(!line.startsWith("(STATIONS"));
+
+                    }
                     continue;
                 } else if (line.startsWith("(STATIONS")) {
+                    line=workScanner.nextLine();
                     System.out.println("girdi");
+                    System.out.println("station içi line: "+line);
                     stationsFound = true;
-                    if (!line.matches("\\(STATIONS(\\s+\\(\\w+\\s+\\d+\\s+[YN]\\s+[YN]\\s+\\w+\\s+\\d+\\s*)+\\)")) {
+                    String splittedline = line.replaceAll("\\s", "");//boşlukları çıkarıyor
+
+                    if (!splittedline.matches("^\\((\\w[.]?)*\\)$")) {
                         System.out.println("Error: Invalid format in STATIONS section.");
                         return false;
                     }
                 }
-
-                workScanner.close();
 
                 if (!taskTypesFound) {
                     System.out.println("Error: TASKTYPES section not found.");
