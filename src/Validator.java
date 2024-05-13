@@ -31,7 +31,7 @@ public class Validator {
 
     public boolean isNumber(String str) {
         // Regular expression to match numbers (integer or decimal)
-        String regex = "^-?\\d*\\.?\\d+$";
+        String regex = "[0-9]*[.]?[0-9]*";
 
         // Compile the regular expression
         Pattern pattern = Pattern.compile(regex);

@@ -66,53 +66,92 @@ public class Main {
         }
 
 
-       /* try {
-            workScanner = new Scanner(workFlowFile);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
 
-        //sets the delimiter to the end of the file (\\Z), and then reads the entire content of the file into a string.
-        String fullWorkFileText=workScanner.useDelimiter("\\Z").next();
-        System.out.println(fullWorkFileText);*/
-
-       /* while (workScanner.hasNextLine()) {
-            String line = workScanner.nextLine();
-            System.out.println("Line: " + line);
-
-            String[] parts = line.split(" ");
-
-            switch (parts[0]) {
-                case "(TASKTYPES":
-                   Task task=new Task();
-                   task.parseTaskTypes(parts);
-                    break;
-                case "(JOBTYPES":
-                    // parseJobTypes(parts);
-                    break;
-                case "(STATIONS":
-                    //parseStations(parts);
-                    break;
-                default:
-                    System.out.println("Syntax error in titles");
-            }
-        }*/
     }
+
+
+     /*switch (parts[0]) {
+                    case "(TASKTYPES":
+                        Task task=new Task();
+                        task.parseTaskTypes(parts);
+                        break;
+                    case "(JOBTYPES":
+                        // parseJobTypes(parts);
+                        break;
+                    case "(STATIONS":
+                        //parseStations(parts);
+                        break;
+                    default:
+                        System.out.println("Syntax error in titles");
+                }*/
 
     public static boolean isCorrectWorkFileFormat(File workFlowFile){
-        try {
-            Scanner workScanner=new Scanner(workFlowFile);
-            //sets the delimiter to the end of the file (\\Z), and then reads the entire content of the file into a string.
-            String content = workScanner.useDelimiter("\\Z").next();
-            String taskTypesPattern = "TASKTYPES\\s*\\((.*)\\)";
-            String jobTypesPattern = "JOBTYPES\\s*\\((.*)\\)";
-            String stationsPattern = "STATIONS\\s*\\((.*)\\)";
 
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        return true;
+            boolean taskTypesFound = false;
+            boolean jobTypesFound = false;
+            boolean stationsFound = false;
+            Scanner workScanner = null;
+
+            try {
+                workScanner = new Scanner(workFlowFile);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+
+
+            while (workScanner.hasNextLine()) {
+                String line = workScanner.nextLine();
+                System.out.println("Line: " + line);
+
+                if (line.startsWith("(TASKTYPES")) {
+                    String splittedline=line.replaceAll("\\s", "");//boşlukları çıkarıyor
+                    taskTypesFound = true;
+                    if (!splittedline.matches("^\\(TASKTYPES(\\w[.]?)*\\)")) {
+                        System.out.println("Error: Invalid format in TASKTYPES section.");
+                        return false;
+                    }
+                    continue;
+                } else if (line.startsWith("(JOBTYPES")) {
+                    line=workScanner.nextLine();
+                    String splittedline=line.replaceAll("\\s", "");//boşlukları çıkarıyor
+                    jobTypesFound = true;
+                    if (!splittedline.matches("^\\((\\w[.]?)*\\)")) {
+                        System.out.println("Error: Invalid format in JOBTYPES section.");
+                        return false;
+                    }
+                    continue;
+                } else if (line.startsWith("(STATIONS")) {
+                    stationsFound = true;
+                    if (!line.matches("\\(STATIONS(\\s+\\(\\w+\\s+\\d+\\s+[YN]\\s+[YN]\\s+\\w+\\s+\\d+\\s*)+\\)")) {
+                        System.out.println("Error: Invalid format in STATIONS section.");
+                        return false;
+                    }
+                }
+
+                workScanner.close();
+
+                if (!taskTypesFound) {
+                    System.out.println("Error: TASKTYPES section not found.");
+                    return false;
+                }
+                if (!jobTypesFound) {
+                    System.out.println("Error: JOBTYPES section not found.");
+                    return false;
+                }
+                if (!stationsFound) {
+                    System.out.println("Error: STATIONS section not found.");
+                    return false;
+                }
+
+
+            }
+            return true;
     }
+
+
+
+
+
 
 
 }
