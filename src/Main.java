@@ -35,6 +35,8 @@ public class Main {
         Scanner jobScanner = null;
         boolean errorOccured = false;
         isCorrectWorkFileFormat(workFlowFile);
+        Validator validator=new Validator();
+
 
 
         ArrayList<Job> jobTypesInText = new ArrayList<Job>();
@@ -106,21 +108,25 @@ public class Main {
                 if (line.startsWith("(TASKTYPES")) {
                     String splittedline=line.replaceAll("\\s", "");//boşlukları çıkarıyor
                     taskTypesFound = true;
-                    if (!splittedline.matches("^\\(TASKTYPES(\\w[.]?)*\\)")) {
+                    if (!splittedline.matches("^\\(TASKTYPES(\\w[.]?)*\\)$")) {
                         System.out.println("Error: Invalid format in TASKTYPES section.");
                         return false;
                     }
                     continue;
                 } else if (line.startsWith("(JOBTYPES")) {
-                    line=workScanner.nextLine();
-                    String splittedline=line.replaceAll("\\s", "");//boşlukları çıkarıyor
-                    jobTypesFound = true;
-                    if (!splittedline.matches("^\\((\\w[.]?)*\\)")) {
-                        System.out.println("Error: Invalid format in JOBTYPES section.");
-                        return false;
-                    }
+                    do {
+                        line = workScanner.nextLine();
+                        System.out.println("job içi line: "+line);
+                        String splittedline = line.replaceAll("\\s", "");//boşlukları çıkarıyor
+                        jobTypesFound = true;
+                        if ( !((splittedline.matches("^\\((\\w[.]?)*\\)$")) || (splittedline.matches("^\\((\\w[.]?)*\\)\\)$")) )) {
+                            System.out.println("Error: Invalid format in JOBTYPES section.");
+                            return false;
+                        }
+                        }while(!line.startsWith("(STATIONS"));
                     continue;
                 } else if (line.startsWith("(STATIONS")) {
+                    System.out.println("girdi");
                     stationsFound = true;
                     if (!line.matches("\\(STATIONS(\\s+\\(\\w+\\s+\\d+\\s+[YN]\\s+[YN]\\s+\\w+\\s+\\d+\\s*)+\\)")) {
                         System.out.println("Error: Invalid format in STATIONS section.");

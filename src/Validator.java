@@ -47,9 +47,16 @@ public class Validator {
 
         return str.indexOf(')') != -1;
     }
-    public static boolean hasClosingParenthesisAtLast(String str) {
+    public boolean hasTwoClosingParenthesisAtLast(String str) {
         char lastChar = str.charAt(str.length() - 1);
-        if(lastChar == ')')return true;
+        char lastlastChar=str.charAt(str.length()-2); //sondan önceki char
+
+        if(lastChar == ')'){
+            if(lastlastChar==')'){
+                return true;
+            }
+
+        }
 
         return false;
     }
