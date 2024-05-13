@@ -17,6 +17,11 @@ public class Task {
         this.stationID = stationID;
         this.status = status;
     }
+
+
+
+
+    //kullanılabilir sample code
     /* while (workScanner.hasNextLine()) {
             String line = workScanner.nextLine();
             System.out.println("Line: " + line);
@@ -36,12 +41,14 @@ public class Task {
                     System.out.println("Syntax error in titles");
             }
         }*/
-    public void parseTaskTypes(String[] parts) {   //0 tasktype yazan eleman
+
+    //Main classın içine yazmak mantıklı gibi
+    public void parseTaskTypes(String[] parts) {   //düzenlencek
         Validator validator = new Validator();
 
         ArrayList<Task> taskTypesInText = new ArrayList<Task>();
         System.out.println("taskparts");
-        for (int i = 1; i < parts.length; i++) {
+        for (int i = 1; i < parts.length; i++) {  //0 tasktype yazan eleman
 
             System.out.println(parts[i]);
 

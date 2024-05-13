@@ -31,16 +31,11 @@ public class Main {
     public static void fileControl(String workFileName, String jobFileName) {
         File workFlowFile = new File(workFileName);
         File jobFile = new File(jobFileName);
-        Scanner workScanner = null;
-        Scanner jobScanner = null;
+
         boolean errorOccured = false;
-        isCorrectWorkFileFormat(workFlowFile);
-        Validator validator=new Validator();
-
-
-
-        ArrayList<Job> jobTypesInText = new ArrayList<Job>();
-        ArrayList<Station> stationsInText = new ArrayList<Station>();
+        if(isCorrectWorkFileFormat(workFlowFile)) {
+            System.out.println("Correct WorkFlowFile Format");
+        }else System.out.println("Wrong WorkFlowFile Format ");
 
 
         try {
@@ -72,20 +67,7 @@ public class Main {
     }
 
 
-     /*switch (parts[0]) {
-                    case "(TASKTYPES":
-                        Task task=new Task();
-                        task.parseTaskTypes(parts);
-                        break;
-                    case "(JOBTYPES":
-                        // parseJobTypes(parts);
-                        break;
-                    case "(STATIONS":
-                        //parseStations(parts);
-                        break;
-                    default:
-                        System.out.println("Syntax error in titles");
-                }*/
+    //task da falan yanlış format varsa sonraki yanlışları göstermiyor o düzeltilcek 
 
     public static boolean isCorrectWorkFileFormat(File workFlowFile){
 

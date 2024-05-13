@@ -12,7 +12,7 @@ public class Validator {
             return false; // ID is not unique
         }
 
-        String regex = "^[a-zA-Z][a-zA-Z0-9_]*$";
+        String regex = "^[a-zA-Z][a-zA-Z0-9_]*$"; //doğru regex
 
         // Compile the regular expression
         Pattern pattern = Pattern.compile(regex);
@@ -31,7 +31,7 @@ public class Validator {
 
     public boolean isNumber(String str) {
         // Regular expression to match numbers (integer or decimal)
-        String regex = "[0-9]*[.]?[0-9]*";
+        String regex = "[0-9]*[.]?[0-9]*";   //doğru regex
 
         // Compile the regular expression
         Pattern pattern = Pattern.compile(regex);
@@ -47,37 +47,12 @@ public class Validator {
 
         return str.indexOf(')') != -1;
     }
-    public boolean hasTwoClosingParenthesisAtLast(String str) {
+    public boolean hasClosingParenthesisAtLast(String str) {
         char lastChar = str.charAt(str.length() - 1);
-        char lastlastChar=str.charAt(str.length()-2); //sondan önceki char
 
-        if(lastChar == ')'){
-            if(lastlastChar==')'){
-                return true;
-            }
-
-        }
+        if(lastChar == ')') return true;
 
         return false;
     }
-
-    public  boolean isValidTaskTypesLineFormat(String str) {
-        // Regular expression to match the format
-        String regex = "\\(TASKTYPES ([a-zA-Z]\\w*\\s*(\\.\\d+)?\\s*)+\\)";
-
-        // Compile the regular expression
-        Pattern pattern = Pattern.compile(regex);
-
-        // Create matcher object
-        Matcher matcher = pattern.matcher(str);
-
-        // Check if the string matches the format
-        return matcher.matches();
-    }
-
-
-
-
-
 
 }
