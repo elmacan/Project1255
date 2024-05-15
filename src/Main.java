@@ -67,9 +67,12 @@ public class Main {
     }
 
 
-    //task da falan yanlış format varsa sonraki yanlışları göstermiyor o düzeltilcek 
+    //task da falan yanlış format varsa sonraki yanlışları göstermiyor o düzeltilcek
 
-    public static boolean isCorrectWorkFileFormat(File workFlowFile){
+    public static boolean isCorrectWorkFileFormat(File workFlowFile){    //tüm line ın sayı harf _ . dan oluşmasını parantezlerin ve title ların yerlerini kontrol ediyor
+
+           // ArrayList<String>jobInfoInText=new ArrayList<String>();
+           // ArrayList<String>stationInfoInText=new ArrayList<String>();
 
             boolean taskTypesFound = false;
             boolean jobTypesFound = false;
@@ -86,8 +89,11 @@ public class Main {
             while (workScanner.hasNextLine()) {
                 String line = workScanner.nextLine();
                 System.out.println("Line: " + line);
+                //BET kaçıncı line da hata verdiğini bul
 
                 if (line.startsWith("(TASKTYPES")) {
+                    String[] pieces=line.split(" ");
+                    parseTaskTypes(pieces);
                     String splittedline=line.replaceAll("\\s", "");//boşlukları çıkarıyor
                     taskTypesFound = true;
                     if (!splittedline.matches("^\\(TASKTYPES(\\w[.]?)*\\)$")) {
@@ -95,7 +101,7 @@ public class Main {
                         return false;
                     }
                     continue;
-                } else if (line.startsWith("(JOBTYPES")) {
+                } else if (line.equals("(JOBTYPES")) {
                     while(!(line.startsWith("(STATIONS"))) {
                         line = workScanner.nextLine();
                         System.out.println("line: "+line);
@@ -109,7 +115,7 @@ public class Main {
 
                     }
                     continue;
-                } else if (line.startsWith("(STATIONS")) {
+                } else if (line.equals("(STATIONS")) {
                     line=workScanner.nextLine();
                     System.out.println("girdi");
                     System.out.println("station içi line: "+line);
@@ -138,6 +144,36 @@ public class Main {
 
             }
             return true;
+    }
+
+    public static void parseTaskTypes(String[] parts) {
+        Validator validator = new Validator();
+
+        ArrayList<Task> taskTypesInText = new ArrayList<Task>();
+        if (validator.isNumber(parts[1])) {
+            System.out.println("Error: task line sayıyla başlıyor");
+            //BET error verince sistemi kapat
+        } else {
+            for (int i = 1; i < parts.length - 1; i++) {  //BET 0 tasktype yazan eleman - en sondaki ) içeren onu ayarlıcam
+
+                if (!validator.isNumber(parts[i])) {
+                    if (validator.isValidID(parts[i])) {
+                        System.out.println("task typeID: " + parts[i]);
+                        Task task = new Task();
+                        task.setTaskType(parts[i]);
+                        taskTypesInText.add(task);
+                        if(validator.isNumber(parts[i+1])){    //i+1 düzeltilcek ileride parantez şeyini ayarlayınca hata vercek
+                            System.out.println("size: "+parts[i+1]);
+                            task.setTaskSize(Double.parseDouble(parts[i+1]));
+                        }
+
+                    } else {
+                        System.out.println("not valid id");
+                    }
+
+                }
+            }
+        }
     }
 
 
