@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -102,8 +103,11 @@ public class Main {
                     }
                     continue;
                 } else if (line.equals("(JOBTYPES")) {
+
                     while(!(line.startsWith("(STATIONS"))) {
                         line = workScanner.nextLine();
+                        String[] pieces=line.split(" ");
+                        parseJobTypes(pieces);
                         System.out.println("line: "+line);
                         String splittedline = line.replaceAll("\\s", "");//boşlukları çıkarıyor
                         if(splittedline.matches("^\\((\\w[.]?)*\\)\\)$"))break;
@@ -146,25 +150,38 @@ public class Main {
             return true;
     }
 
-    public static void parseTaskTypes(String[] parts) {
+    public static void parseTaskTypes(String[] pieces) {
         Validator validator = new Validator();
+        ArrayList<String>realPieces=new ArrayList<String>();
+        ArrayList<Task>taskTypesInText=new ArrayList<Task>();
 
-        ArrayList<Task> taskTypesInText = new ArrayList<Task>();
-        if (validator.isNumber(parts[1])) {
+        for(String s: pieces){
+            if (!s.contains("(") && !s.contains(")") && !s.contains("(TASKTYPES")) {
+                realPieces.add(s);
+            }
+        }
+
+        for(String s: realPieces){
+            System.out.println("pieces: "+s);
+        }
+
+
+
+        if (validator.isNumber(realPieces.get(0))) {
             System.out.println("Error: task line sayıyla başlıyor");
             //BET error verince sistemi kapat
         } else {
-            for (int i = 1; i < parts.length - 1; i++) {  //BET 0 tasktype yazan eleman - en sondaki ) içeren onu ayarlıcam
+             for (int i = 0; i < realPieces.size(); i++) {
 
-                if (!validator.isNumber(parts[i])) {
-                    if (validator.isValidID(parts[i])) {
-                        System.out.println("task typeID: " + parts[i]);
+                if (!validator.isNumber(realPieces.get(i))) {
+                    if (validator.isValidID(realPieces.get(i))) {
+                        System.out.println("task typeID: " + realPieces.get(i));
                         Task task = new Task();
-                        task.setTaskType(parts[i]);
+                        task.setTaskType(realPieces.get(i));
                         taskTypesInText.add(task);
-                        if(validator.isNumber(parts[i+1])){    //i+1 düzeltilcek ileride parantez şeyini ayarlayınca hata vercek
-                            System.out.println("size: "+parts[i+1]);
-                            task.setTaskSize(Double.parseDouble(parts[i+1]));
+                        if((i+1<realPieces.size()) && (validator.isNumber(realPieces.get(i+1)))){    //i+1 düzeltilcek ileride parantez şeyini ayarlayınca hata vercek
+                            System.out.println("size: "+realPieces.get(i+1));
+                            task.setTaskSize(Double.parseDouble(realPieces.get(i+1)));
                         }
 
                     } else {
@@ -175,6 +192,21 @@ public class Main {
             }
         }
     }
+
+    public static void parseJobTypes(String[] pieces){
+        ArrayList<String>realPieces=new ArrayList<String>();
+        for(String s: pieces){
+            if (!s.contains("(") && !s.contains(")")) {
+                realPieces.add(s);
+            }
+        }
+
+        for(String s: realPieces){
+            System.out.println("pieces: "+s);
+        }
+
+    }
+
 
 
 
