@@ -32,6 +32,8 @@ public class Station {
         }
     }
 
+    //random speed maxla min arasındaki ilişki ne?
+
     private double getRandomSpeed() {
         double minSpeed = speedForThatTask * (1 - plusMinus);
         double maxSpeed = speedForThatTask * (1 + plusMinus);
