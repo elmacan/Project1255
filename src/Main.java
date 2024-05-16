@@ -84,7 +84,7 @@ public class Main {
     public static boolean isCorrectWorkFileFormat(File workFlowFile,ArrayList<Task> taskTypesInText,ArrayList<Job> jobTypesInText){    //tüm line ın sayı harf _ . dan oluşmasını parantezlerin ve title ların yerlerini kontrol ediyor
 
            // ArrayList<String>stationInfoInText=new ArrayList<String>();
-
+            int countIndex=0;
             boolean taskTypesFound = false;
             boolean jobTypesFound = false;
             boolean stationsFound = false;
@@ -118,7 +118,8 @@ public class Main {
                     while(!(line.startsWith("(STATIONS"))) {
                         line = workScanner.nextLine();
                         String[] pieces=line.split(" ");
-                        parseJobTypes(pieces,jobTypesInText,taskTypesInText);
+                        parseJobTypes(pieces,jobTypesInText,taskTypesInText,countIndex);
+                        countIndex++;
                         System.out.println("line: "+line);
                         String splittedline = line.replaceAll("\\s", "");//boşlukları çıkarıyor
                         if(splittedline.matches("^\\((\\w[.]?)*\\)\\)$"))break;
@@ -160,10 +161,10 @@ public class Main {
             return true;
     }
 
-    public static void parseJobTypes(String[] pieces,ArrayList<Job> jobTypesInText,ArrayList<Task> taskTypesInText) {
+    public static void parseJobTypes(String[] pieces,ArrayList<Job> jobTypesInText,ArrayList<Task> taskTypesInText,int countIndex) {
         ArrayList<String> realPieces = new ArrayList<String>();
         Validator validator = new Validator();
-        int countIndex = 0;
+
         for (String s : pieces) {
             if (!s.contains("(") && !s.contains(")")) {
                 realPieces.add(s);
@@ -193,8 +194,8 @@ public class Main {
                     for (j = 0; j < taskTypesInText.size(); j++) {
                         if (realPieces.get(i).equals(taskTypesInText.get(j).getTaskType())) {
                             System.out.println("------------------deneme:      " + taskTypesInText.get(j).getTaskType());
-                            taskTypesInText.get(j).setTaskSize(Double.parseDouble(realPieces.get(i + 1)));
-                            jobTypesInText.get(0).getTasks().add(taskTypesInText.get(j));
+                            //taskTypesInText.get(j).setTaskSize(Double.parseDouble(realPieces.get(i + 1)));
+                            jobTypesInText.get(countIndex).getTasks().add(taskTypesInText.get(j));
 
                         }
                     }
@@ -210,7 +211,7 @@ public class Main {
             }
 
         }
-        countIndex++;
+
 
     }
 
