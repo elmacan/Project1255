@@ -11,6 +11,8 @@ public class Station {
     private ArrayList<Task> currentTasks = new ArrayList<Task>();  //o sırada execute olan
     private ArrayList<Task> waitingTasks = new ArrayList<Task>();  //execute olmayı bekleyen
 
+
+    // maxcapacitye ulaşılmamışsa task ekle
     public void addTask(Task task) {
         if (currentTasks.size() < maxCapacity) {
             currentTasks.add(task);
@@ -18,7 +20,11 @@ public class Station {
         } else {
             waitingTasks.add(task);
         }
-    }public void processQueue() {
+
+
+    }
+    // waitingden removela currenttaska ekle
+    public void processQueue() {
         while (currentTasks.size() < maxCapacity && !waitingTasks.isEmpty()) {
             Task task = waitingTasks.remove(0);
             currentTasks.add(task);
