@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Station {
     private String stationID;
@@ -10,6 +11,44 @@ public class Station {
     private String status;
     private ArrayList<Task> currentTasks = new ArrayList<Task>();  //o sırada execute olan
     private ArrayList<Task> waitingTasks = new ArrayList<Task>();  //execute olmayı bekleyen
+
+
+    // current taskin sizeı max kapasiteden küçükse işleme alıyo değilse sıraya sokuyor
+    public void addTask(Task task) {
+        if (currentTasks.size() < maxCapacity) {
+            currentTasks.add(task);
+            task.start(getRandomSpeed());
+        } else {
+            waitingTasks.add(task);
+        }
+    }
+
+    private double getRandomSpeed() {
+        // eğer plusminus değeri yoksa çık
+        if(plusMinus==0){
+
+        }
+        else{
+            double minSpeed = speedForThatTask * (1 - plusMinus);
+            double maxSpeed = speedForThatTask * (1 + plusMinus);
+            return minSpeed + (maxSpeed - minSpeed) * plusMinus;// burası olmadı
+        }
+
+
+        return 0;
+    }
+
+    //waitingtasks den task removelama
+    public void processQueue() {
+        while (currentTasks.size() < maxCapacity && !waitingTasks.isEmpty()) {
+            Task task = waitingTasks.remove(0);
+            currentTasks.add(task);
+            task.start(getRandomSpeed());
+        }
+    }
+
+
+
 
 
     public String getStationID() {

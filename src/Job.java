@@ -13,6 +13,16 @@ public class Job {
     private String status;
 
 
+    public void jobStart(Job job1,int currentTime){
+
+    }
+    public void jobfinish(Job job1,int currentTime){
+
+    }
+
+
+
+
 
 
     public void printTasks(){
