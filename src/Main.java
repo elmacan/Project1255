@@ -68,11 +68,15 @@ public class Main {
     }
 
 
-    //task da falan yanlış format varsa sonraki yanlışları göstermiyor o düzeltilcek
+    //BET exception olarak çevir
+    //BET description error örneklerine göre bak
+    //BET human readable versiyonu ekle
+    //BET errorların kaçıncı satırda olduğunu yazdır
+    //BET task da falan yanlış format varsa sonraki yanlışları göstermiyor o düzeltilcek
 
     public static boolean isCorrectWorkFileFormat(File workFlowFile){    //tüm line ın sayı harf _ . dan oluşmasını parantezlerin ve title ların yerlerini kontrol ediyor
-
-           // ArrayList<String>jobInfoInText=new ArrayList<String>();
+            ArrayList<Job>jobTypesInText=new ArrayList<Job>();
+            ArrayList<Task>taskTypesInText=new ArrayList<Task>();
            // ArrayList<String>stationInfoInText=new ArrayList<String>();
 
             boolean taskTypesFound = false;
@@ -94,7 +98,7 @@ public class Main {
 
                 if (line.startsWith("(TASKTYPES")) {
                     String[] pieces=line.split(" ");
-                    parseTaskTypes(pieces);
+                    parseTaskTypes(pieces,taskTypesInText);
                     String splittedline=line.replaceAll("\\s", "");//boşlukları çıkarıyor
                     taskTypesFound = true;
                     if (!splittedline.matches("^\\(TASKTYPES(\\w[.]?)*\\)$")) {
@@ -107,7 +111,7 @@ public class Main {
                     while(!(line.startsWith("(STATIONS"))) {
                         line = workScanner.nextLine();
                         String[] pieces=line.split(" ");
-                        parseJobTypes(pieces);
+                        parseJobTypes(pieces,jobTypesInText,taskTypesInText);
                         System.out.println("line: "+line);
                         String splittedline = line.replaceAll("\\s", "");//boşlukları çıkarıyor
                         if(splittedline.matches("^\\((\\w[.]?)*\\)\\)$"))break;
@@ -121,8 +125,7 @@ public class Main {
                     continue;
                 } else if (line.equals("(STATIONS")) {
                     line=workScanner.nextLine();
-                    System.out.println("girdi");
-                    System.out.println("station içi line: "+line);
+                    System.out.println("line: "+line);
                     stationsFound = true;
                     String splittedline = line.replaceAll("\\s", "");//boşlukları çıkarıyor
 
@@ -150,10 +153,53 @@ public class Main {
             return true;
     }
 
-    public static void parseTaskTypes(String[] pieces) {
+    public static void parseJobTypes(String[] pieces,ArrayList<Job> jobTypesInText,ArrayList<Task> taskTypesInText) {
+        ArrayList<String> realPieces = new ArrayList<String>();
+        Validator validator = new Validator();
+        for (String s : pieces) {
+            if (!s.contains("(") && !s.contains(")")) {
+                realPieces.add(s);
+            }
+        }
+
+        for (String s : realPieces) {
+            System.out.println("pieces: " + s);
+        }
+
+        Job job = new Job();
+        if (validator.isValidID(realPieces.get(0))) {
+            job.setJobType(realPieces.get(0));
+            jobTypesInText.add(job);
+        } else {
+            System.out.println("invalid jobtypeId");
+            System.exit(1);
+
+        }
+
+
+            
+        //BET declare olmamış task var mı
+        for (int i = 0; i < jobTypesInText.size(); i++) {
+            System.out.println("job---------------  " + jobTypesInText.get(i).getJobType());
+        }
+
+
+
+
+
+
+
+
+
+
+    }
+
+    //BET stringbuilder bak bir
+    //BET parantez öncesi boşluk olmazsa son elemanı almıyor onu sonra düzelt
+    public static void parseTaskTypes(String[] pieces,ArrayList<Task> taskTypesInText) {
         Validator validator = new Validator();
         ArrayList<String>realPieces=new ArrayList<String>();
-        ArrayList<Task>taskTypesInText=new ArrayList<Task>();
+
 
         for(String s: pieces){
             if (!s.contains("(") && !s.contains(")") && !s.contains("(TASKTYPES")) {
@@ -165,10 +211,8 @@ public class Main {
             System.out.println("pieces: "+s);
         }
 
-
-
         if (validator.isNumber(realPieces.get(0))) {
-            System.out.println("Error: task line sayıyla başlıyor");
+            //System.out.println("Error: task line sayıyla başlıyor");
             //BET error verince sistemi kapat
         } else {
              for (int i = 0; i < realPieces.size(); i++) {
@@ -179,8 +223,10 @@ public class Main {
                         Task task = new Task();
                         task.setTaskType(realPieces.get(i));
                         taskTypesInText.add(task);
-                        if((i+1<realPieces.size()) && (validator.isNumber(realPieces.get(i+1)))){    //i+1 düzeltilcek ileride parantez şeyini ayarlayınca hata vercek
-                            System.out.println("size: "+realPieces.get(i+1));
+                        if((i+1<realPieces.size()) && (validator.isNumber(realPieces.get(i+1)))){
+
+
+                           // System.out.println("size: "+realPieces.get(i+1));
                             task.setTaskSize(Double.parseDouble(realPieces.get(i+1)));
                         }
 
@@ -193,19 +239,6 @@ public class Main {
         }
     }
 
-    public static void parseJobTypes(String[] pieces){
-        ArrayList<String>realPieces=new ArrayList<String>();
-        for(String s: pieces){
-            if (!s.contains("(") && !s.contains(")")) {
-                realPieces.add(s);
-            }
-        }
-
-        for(String s: realPieces){
-            System.out.println("pieces: "+s);
-        }
-
-    }
 
 
 
