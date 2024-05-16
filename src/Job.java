@@ -13,6 +13,19 @@ public class Job {
     private String status;
 
 
+
+
+    public void printTasks(){
+        System.out.println();
+        System.out.println("jobtype: "+this.jobType);
+        for(int i=0;i<tasks.size();i++){
+
+            System.out.print("   task: "+tasks.get(i).getTaskType());
+            System.out.println("   size: "+tasks.get(i).getTaskSize());
+
+        }
+
+    }
     public String getJobID() {
         return jobID;
     }

@@ -19,22 +19,29 @@ public class Main {
         }
         String workFileName = args[0];
         String jobFileName = args[1];
-        fileControl(workFileName, jobFileName);
+        ArrayList<Job> jobTypesInText = new ArrayList<Job>();
+        ArrayList<Task> taskTypesInText = new ArrayList<Task>();
+        fileControl(workFileName, jobFileName, taskTypesInText, jobTypesInText);
 
+
+        for (int i = 0; i < jobTypesInText.size(); i++) {
+            jobTypesInText.get(i).printTasks();
+        }
+       // jobTypesInText.get(0).printTasks();
 
         int currentTime = 0;
 
         //event queue yapılcak
 
+
     }
 
-
-    public static void fileControl(String workFileName, String jobFileName) {
+    public static void fileControl(String workFileName, String jobFileName,ArrayList<Task> taskTypesInText,ArrayList<Job> jobTypesInText) {
         File workFlowFile = new File(workFileName);
         File jobFile = new File(jobFileName);
 
         boolean errorOccured = false;
-        if(isCorrectWorkFileFormat(workFlowFile)) {
+        if(isCorrectWorkFileFormat(workFlowFile,taskTypesInText,jobTypesInText)) {
             System.out.println("Correct WorkFlowFile Format");
         }else System.out.println("Wrong WorkFlowFile Format ");
 
@@ -74,9 +81,8 @@ public class Main {
     //BET errorların kaçıncı satırda olduğunu yazdır
     //BET task da falan yanlış format varsa sonraki yanlışları göstermiyor o düzeltilcek
 
-    public static boolean isCorrectWorkFileFormat(File workFlowFile){    //tüm line ın sayı harf _ . dan oluşmasını parantezlerin ve title ların yerlerini kontrol ediyor
-            ArrayList<Job>jobTypesInText=new ArrayList<Job>();
-            ArrayList<Task>taskTypesInText=new ArrayList<Task>();
+    public static boolean isCorrectWorkFileFormat(File workFlowFile,ArrayList<Task> taskTypesInText,ArrayList<Job> jobTypesInText){    //tüm line ın sayı harf _ . dan oluşmasını parantezlerin ve title ların yerlerini kontrol ediyor
+
            // ArrayList<String>stationInfoInText=new ArrayList<String>();
 
             boolean taskTypesFound = false;
@@ -90,9 +96,10 @@ public class Main {
                 throw new RuntimeException(e);
             }
 
+            String line;
 
             while (workScanner.hasNextLine()) {
-                String line = workScanner.nextLine();
+                line = workScanner.nextLine();
                 System.out.println("Line: " + line);
                 //BET kaçıncı line da hata verdiğini bul
 
@@ -156,6 +163,7 @@ public class Main {
     public static void parseJobTypes(String[] pieces,ArrayList<Job> jobTypesInText,ArrayList<Task> taskTypesInText) {
         ArrayList<String> realPieces = new ArrayList<String>();
         Validator validator = new Validator();
+        int countIndex = 0;
         for (String s : pieces) {
             if (!s.contains("(") && !s.contains(")")) {
                 realPieces.add(s);
@@ -177,22 +185,61 @@ public class Main {
         }
 
 
-            
+        int j = 0;
         //BET declare olmamış task var mı
-        for (int i = 0; i < jobTypesInText.size(); i++) {
-            System.out.println("job---------------  " + jobTypesInText.get(i).getJobType());
+        for (int i = 1; i < realPieces.size(); i++) {
+            if (!validator.isNumber(realPieces.get(i))) { //t1 e bakan
+                if ((i + 1 < realPieces.size()) && (validator.isNumber(realPieces.get(i + 1)))) { //t1 den sonra sayı var mı koşulu
+                    for (j = 0; j < taskTypesInText.size(); j++) {
+                        if (realPieces.get(i).equals(taskTypesInText.get(j).getTaskType())) {
+                            System.out.println("------------------deneme:      " + taskTypesInText.get(j).getTaskType());
+                            taskTypesInText.get(j).setTaskSize(Double.parseDouble(realPieces.get(i + 1)));
+                            jobTypesInText.get(0).getTasks().add(taskTypesInText.get(j));
+
+                        }
+                    }
+                } else {
+                    //j1
+                    for (int k = 0; k < taskTypesInText.size(); k++) {
+                        if (realPieces.get(i).equals(taskTypesInText.get(k).getTaskType())) {
+                            jobTypesInText.get(countIndex).getTasks().add(taskTypesInText.get(k));
+                        }
+                        //her j için olan task disizi
+                    }
+                }
+            }
+
         }
-
-
-
-
-
-
-
-
-
+        countIndex++;
 
     }
+
+
+
+
+
+
+   /* private static Task findTask(String taskType, ArrayList<Task> taskTypesInText) {
+        for (Task task : taskTypesInText) {
+            if (task.getTaskType().equals(taskType)) {
+                return task;
+            }
+        }
+        return null;
+    }
+      for (int i = 1; i < pieces.length; i++) {
+            String piece = pieces[i];
+            Task task = findTask(piece, taskTypesInText);
+
+            if (task != null) {
+                jobTypesInText.get(i).getTasks().add(task);
+            } else {
+                System.out.println("Error: Task not found for job type.");
+                return;
+            }
+
+
+        }*/
 
     //BET stringbuilder bak bir
     //BET parantez öncesi boşluk olmazsa son elemanı almıyor onu sonra düzelt
@@ -208,18 +255,18 @@ public class Main {
         }
 
         for(String s: realPieces){
-            System.out.println("pieces: "+s);
+           // System.out.println("pieces: "+s);
         }
 
         if (validator.isNumber(realPieces.get(0))) {
-            //System.out.println("Error: task line sayıyla başlıyor");
+            System.out.println("Error: task line sayıyla başlıyor");
             //BET error verince sistemi kapat
         } else {
              for (int i = 0; i < realPieces.size(); i++) {
 
                 if (!validator.isNumber(realPieces.get(i))) {
                     if (validator.isValidID(realPieces.get(i))) {
-                        System.out.println("task typeID: " + realPieces.get(i));
+                        //System.out.println("task typeID: " + realPieces.get(i));
                         Task task = new Task();
                         task.setTaskType(realPieces.get(i));
                         taskTypesInText.add(task);
