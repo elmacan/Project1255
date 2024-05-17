@@ -105,19 +105,23 @@ public class Job {
     public void setStatus(String status) {
         this.status = status;
     }
+    public Task getNextTask(Task tasks){
+        int i = currentTaskIndex+1;
+        return getTasks().get(i);
+    }
     public void printJobState(String status){
         System.out.println("Job ID: " +  this.jobID );
         System.out.println("Current task: " + getTasks().get(currentTaskIndex));
         System.out.println("Job status: " + this.status);
     }
-    Public void jobOrder(Job job, int startTime) {
-        Task firstTask = job.getNextTask();
-        Station station = executionStation(firstTask);  // Method to find a suitable station
-        int completionTime = calculateTaskCompletionTime(firstTask, station, startTime);
+    //public void jobOrder(Job job, int startTime) {
+      //  Task firstTask = job.getNextTask();
+        //Station station = executionStation(firstTask);  // Method to find a suitable station
+       // int completionTime = completetionTime(firstTask, station, startTime);
 
-        job.setCurrentStation(station);  /
-        eventQueue.add(new Event(Event.EventType.TASK_COMPLETE, completionTime, job));
-    }
+        //job.setCurrentStation(station);  /
+       // eventQueue.add(new Event(Event.EventType.TASK_COMPLETE, completionTime, job));
+   // }
 
     public void deadlinePassedOrNot(){ //deadline before/after
         if(this.completeTime>this.deadline){
