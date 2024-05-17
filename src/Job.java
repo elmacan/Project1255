@@ -14,6 +14,13 @@ public class Job {
     private int currentTime;
 
 
+
+    public Job(){
+
+    }
+
+
+
     public Job(String jobID, String jobType, ArrayList<Task> tasks, int currentTaskIndex, int duration, int startTime, int deadline, int completeTime, String status, int currentTime) {
         this.jobID = jobID;
         this.jobType = jobType;

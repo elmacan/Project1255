@@ -25,6 +25,7 @@ public class Main {
 
 
         for (int i = 0; i < jobTypesInText.size(); i++) {
+
             jobTypesInText.get(i).printTasks();
         }
        // jobTypesInText.get(0).printTasks();
@@ -185,29 +186,30 @@ public class Main {
 
         }
 
-
         int j = 0;
         //BET declare olmamış task var mı
         for (int i = 1; i < realPieces.size(); i++) {
             if (!validator.isNumber(realPieces.get(i))) { //t1 e bakan
-                if(validator.isValidID(realPieces.get(i))){
-                    Task task=new Task();
+                if (validator.isValidID(realPieces.get(i))) {
+                    Task task = new Task();
                     task.setTaskType(realPieces.get(i));
-                    jobTypesInText.get(countIndex).getTasks().add(task);
+                    job.getTasks().add(task);
+
                     if ((i + 1 < realPieces.size()) && (validator.isNumber(realPieces.get(i + 1)))) {
-                        task.setTaskSize(Double.parseDouble(realPieces.get(i+1)));
 
-                    }
-                    else{
-                        if(findDefaultSizeOfTaskType(realPieces.get(i),taskTypesInText )==-1){
-                            System.out.println(realPieces.get(i)+" has no size");
+                        task.setTaskSize(Double.parseDouble(realPieces.get(i + 1)));
+                        //job.getTasks().add(task);
+                    } else {
+
+                        if (findDefaultSizeOfTaskType(realPieces.get(i), taskTypesInText) == -1) {
+                            System.out.println(realPieces.get(i) + " has no size");
+
+                        } else {
+
+                            task.setTaskSize(findDefaultSizeOfTaskType(realPieces.get(i), taskTypesInText));
+                            //job.getTasks().add(task);
                         }
-                        else{
-                            task.setTaskSize(findDefaultSizeOfTaskType(realPieces.get(i),taskTypesInText ));
-                        }
-
                     }
-
 
                 }
             }
@@ -217,21 +219,24 @@ public class Main {
 
     }
 
-    public static double findDefaultSizeOfTaskType(String taskTypeID,ArrayList<String> taskTypesInText){
-            Validator validator=new Validator();
-            double defeaultSize=-1;
-            for(int i=0;i< taskTypesInText.size();i++){
-                if(taskTypesInText.get(i).equals(taskTypeID)){
-                        if((i + 1 < taskTypesInText.size()) && (validator.isNumber(taskTypesInText.get(i + 1)))){
-                            return Double.parseDouble(taskTypesInText.get(i+1));
-                    }
+    public static double findDefaultSizeOfTaskType(String taskTypeID, ArrayList<String> taskTypesInText) {
+        Validator validator = new Validator();
 
+        for (int i = 0; i < taskTypesInText.size(); i++) {
+
+            if (taskTypeID.equals(taskTypesInText.get(i))) {
+
+                if (i + 1 < taskTypesInText.size() && validator.isNumber(taskTypesInText.get(i + 1))) {
+
+                    return Double.parseDouble(taskTypesInText.get(i + 1));
                 }
             }
-
-
-       return defeaultSize;
+        }
+        return -1;
     }
+
+
+
 
 
     //BET stringbuilder bak bir
@@ -249,13 +254,14 @@ public class Main {
         }
 
         for(String s: taskTypesInText){
-           // System.out.println("pieces: "+s);
+           System.out.println("pieces: "+s);
         }
 
         if (validator.isNumber(taskTypesInText.get(0))) {
             System.out.println("Error: task line sayıyla başlıyor");
             //BET error verince sistemi kapat
         }
+
 
 
     }

@@ -18,11 +18,18 @@ public class Task {
         this.status = status;
     }
 
+
     public void start(double stationSpeed) {
         this.duration = taskSize / stationSpeed;
         this.status = "in_progress";
     }
 
+
+
+    public Task(String taskType, double taskSize) {
+        this.taskType=taskType;
+        this.taskSize=taskSize;
+    }
 
 
 
