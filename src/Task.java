@@ -24,6 +24,13 @@ public class Task {
         System.out.println("Task of type " + taskType + " is starting at station " + stationID + ". Duration: " + duration + " minutes.");
     }
 
+    public void completedTasKStatus(){
+        setStatus("completed");
+    }
+    public void waitingTaskStatus(){
+        setStatus("waiting task");
+    }
+
 
 
 
