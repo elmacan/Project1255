@@ -12,9 +12,6 @@ public class Job {
     private int completeTime; //job ın complete olduğu zaman
     private String status;
 
-
-
-
     public void printTasks(){
         System.out.println();
         System.out.println("jobtype: "+this.jobType);
@@ -79,7 +76,7 @@ public class Job {
     }
 
     public void setDeadline(int deadline) {
-        this.deadline = deadline;
+        this.deadline = this.duration+this.startTime;
     }
 
     public int getCompleteTime() {
@@ -97,4 +94,24 @@ public class Job {
     public void setStatus(String status) {
         this.status = status;
     }
+
+
+    public void updateStatus(String newStatus){ //update job status
+        this.status = newStatus;
+    }
+    public void printJobState(String status){
+        System.out.println("Job ID: " +  this.jobID );
+        System.out.println("Current task: " + this.tasks);
+        System.out.println("Task status: " + this.status);
+    }
+    public void deadlineNotPassed(){
+        if(this.completeTime>this.deadline){
+            System.out.println("The task exceeded its deadline");
+        }else if(this.completeTime<=this.deadline) {
+            System.out.println("The task completed right on time");
+        }
+    }
+        }
+    }
 }
+
