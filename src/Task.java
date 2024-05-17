@@ -26,8 +26,6 @@ public class Task {
 
 
 
-
-
     //kullanılabilir sample code
     /* while (workScanner.hasNextLine()) {
             String line = workScanner.nextLine();

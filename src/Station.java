@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Station {
     private String stationID;
@@ -13,32 +12,18 @@ public class Station {
     private ArrayList<Task> waitingTasks = new ArrayList<Task>();  //execute olmayı bekleyen
 
 
-    // current taskin sizeı max kapasiteden küçükse işleme alıyo değilse sıraya sokuyor
+    // maxcapacitye ulaşılmamışsa task ekle
     public void addTask(Task task) {
         if (currentTasks.size() < maxCapacity) {
             currentTasks.add(task);
             task.start(getRandomSpeed());
         } else {
-            waitingTasks.add(task);
+            waitingTasks.add(task);//hhjg
         }
+
+
     }
-
-    private double getRandomSpeed() {
-        // eğer plusminus değeri yoksa çık
-        if(plusMinus==0){
-
-        }
-        else{
-            double minSpeed = speedForThatTask * (1 - plusMinus);
-            double maxSpeed = speedForThatTask * (1 + plusMinus);
-            return minSpeed + (maxSpeed - minSpeed) * plusMinus;// burası olmadı
-        }
-
-
-        return 0;
-    }
-
-    //waitingtasks den task removelama
+    // waitingden removela currenttaska ekle
     public void processQueue() {
         while (currentTasks.size() < maxCapacity && !waitingTasks.isEmpty()) {
             Task task = waitingTasks.remove(0);
@@ -47,8 +32,13 @@ public class Station {
         }
     }
 
+    //random speed maxla min arasındaki ilişki ne?
 
-
+    private double getRandomSpeed() {
+        double minSpeed = speedForThatTask * (1 - plusMinus);
+        double maxSpeed = speedForThatTask * (1 + plusMinus);
+        return minSpeed + (maxSpeed - minSpeed) ;// burasını anlamadım
+    }
 
 
     public String getStationID() {
