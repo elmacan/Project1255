@@ -18,7 +18,7 @@ public class Station {
             currentTasks.add(task);
             task.start(getRandomSpeed());
         } else {
-            waitingTasks.add(task);
+            waitingTasks.add(task);//hhjg
         }
 
 
