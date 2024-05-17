@@ -120,7 +120,6 @@ public class Job {
         }else{
             return this.status = "Completed";
         }
-        
     }
 }
 
