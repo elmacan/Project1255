@@ -176,7 +176,7 @@ public class Main {
             System.out.println("pieces: " + s);
         }
 
-        Job job = new Job();
+        /*Job job = new Job();
         if (validator.isValidID(realPieces.get(0))) {
             job.setJobType(realPieces.get(0));
             jobTypesInText.add(job);
@@ -184,7 +184,7 @@ public class Main {
             System.out.println("invalid jobtypeId");
             System.exit(1);
 
-        }
+        }*/
 
         int j = 0;
         //BET declare olmamış task var mı

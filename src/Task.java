@@ -17,27 +17,13 @@ public class Task {
         this.stationID = stationID;
         this.status = status;
     }
-
-    public void completedTaskStatus(){
-        setStatus("Completed");
+//---------------------------------------
+    public void start(double speed) {
+        this.duration = taskSize / speed;
+        this.status = "execute";
+        System.out.println("Task of type " + taskType + " is starting at station " + stationID + ". Duration: " + duration + " minutes.");
     }
 
-    public void waitingTaskStatus(){
-        setStatus("Waiting Task");
-    }
-
-
-    public void start(double stationSpeed) {
-        this.duration = taskSize / stationSpeed;
-        this.status = "in_progress";
-    }
-
-
-
-    public Task(String taskType, double taskSize) {
-        this.taskType=taskType;
-        this.taskSize=taskSize;
-    }
 
 
 

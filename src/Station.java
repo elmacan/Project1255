@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Station {
     private String stationID;
@@ -14,7 +15,15 @@ public class Station {
 
 
     // maxcapacitye ulaşılmamışsa task ekle
+
+    public boolean isStationAvailable(){
+        return currentTasks.size()<maxCapacity;
+
+    }
+
+
     public void addTask(Task task) {
+
         if (currentTasks.size() < maxCapacity) {
             currentTasks.add(task);
             task.start(getRandomSpeed());
@@ -36,9 +45,10 @@ public class Station {
     //random speed maxla min arasındaki ilişki ne?
 
     private double getRandomSpeed() {
+        Random random = new Random();
         double minSpeed = speedForThatTask * (1 - plusMinus);
         double maxSpeed = speedForThatTask * (1 + plusMinus);
-        return minSpeed + (maxSpeed - minSpeed) ;// burasını anlamadım
+        return minSpeed + (maxSpeed - minSpeed) * random.nextDouble();//
     }
 
 

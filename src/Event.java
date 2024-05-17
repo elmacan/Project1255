@@ -30,6 +30,11 @@ public class Event {
     }
     //private String status;
 
+    public int calculateTaskCompletionTime(Task task, Station station, int startTime) {
+        double taskDuration = task.getTaskSize() / station.getSpeedForThatTask();
+        return startTime + (int) Math.ceil(taskDuration);
+    }
+
 
     public int getStartTime() {
         return startTime;
