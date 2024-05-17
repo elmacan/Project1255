@@ -18,6 +18,14 @@ public class Task {
         this.status = status;
     }
 
+    public void completedTaskStatus(){
+        setStatus("Completed");
+    }
+
+    public void waitingTaskStatus(){
+        setStatus("Waiting Task");
+    }
+
 
     public void start(double stationSpeed) {
         this.duration = taskSize / stationSpeed;

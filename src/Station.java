@@ -12,6 +12,7 @@ public class Station {
     private ArrayList<Task> waitingTasks = new ArrayList<Task>();  //execute olmayı bekleyen
 
 
+
     // maxcapacitye ulaşılmamışsa task ekle
     public void addTask(Task task) {
         if (currentTasks.size() < maxCapacity) {
