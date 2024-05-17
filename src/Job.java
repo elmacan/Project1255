@@ -11,6 +11,7 @@ public class Job {
     private int deadline; // =duration+startTime
     private int completeTime; //job ın complete olduğu zaman
     private String status;
+    private int currentTime;
 
     public void printTasks(){
         System.out.println();
@@ -107,11 +108,19 @@ public class Job {
     public void deadlineNotPassed(){
         if(this.completeTime>this.deadline){
             System.out.println("The task exceeded its deadline");
-        }else if(this.completeTime<=this.deadline) {
+        }else if(this.completeTime<=this.deadline){
             System.out.println("The task completed right on time");
         }
     }
+    public String stateOfJob() {
+        if(this.currentTime<this.startTime) {
+            return this.status = "Waiting to Start";
+        }else if((this.currentTime>this.startTime)&&(this.currentTime<=this.completeTime)){
+            return this.status = "In Progress";
+        }else{
+            return this.status = "Completed";
         }
+        
     }
 }
 
