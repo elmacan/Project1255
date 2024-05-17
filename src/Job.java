@@ -13,17 +13,20 @@ public class Job {
     private String status;
     private int currentTime;
 
-    public void printTasks(){
-        System.out.println();
-        System.out.println("jobtype: "+this.jobType);
-        for(int i=0;i<tasks.size();i++){
 
-            System.out.print("   task: "+tasks.get(i).getTaskType());
-            System.out.println("   size: "+tasks.get(i).getTaskSize());
-
-        }
-
+    public Job(String jobID, String jobType, ArrayList<Task> tasks, int currentTaskIndex, int duration, int startTime, int deadline, int completeTime, String status, int currentTime) {
+        this.jobID = jobID;
+        this.jobType = jobType;
+        this.tasks = tasks;
+        this.currentTaskIndex = currentTaskIndex;
+        this.duration = duration;
+        this.startTime = startTime;
+        this.deadline = duration+startTime;
+        this.completeTime = completeTime;
+        this.status = status;
+        this.currentTime = currentTime;
     }
+
     public String getJobID() {
         return jobID;
     }
@@ -95,24 +98,30 @@ public class Job {
     public void setStatus(String status) {
         this.status = status;
     }
-
-
-    public void updateStatus(String newStatus){ //update job status
-        this.status = newStatus;
-    }
     public void printJobState(String status){
         System.out.println("Job ID: " +  this.jobID );
-        System.out.println("Current task: " + this.tasks);
-        System.out.println("Task status: " + this.status);
+        System.out.println("Current task: " + getTasks().get(currentTaskIndex));
+        System.out.println("Job status: " + this.status);
     }
-    public void deadlineNotPassed(){
+    public void deadlinePassedOrNot(){ //deadline before/after
         if(this.completeTime>this.deadline){
-            System.out.println("The task exceeded its deadline");
-        }else if(this.completeTime<=this.deadline){
-            System.out.println("The task completed right on time");
+            System.out.println("The job exceeded its deadline by: " + (this.completeTime-this.deadline));
+        }else if(this.completeTime<this.deadline){
+            System.out.println("The job completed early:  " + (this.deadline-this.completeTime));
         }
     }
-    public String stateOfJob() {
+    public void printTasks(){
+        System.out.println();
+        System.out.println("jobtype: "+this.jobType);
+        for(int i=0;i<tasks.size();i++){
+
+            System.out.print("   task: "+tasks.get(i).getTaskType());
+            System.out.println("   size: "+tasks.get(i).getTaskSize());
+
+        }
+
+    }
+    public String stateOfJob() { //Jobun sa
         if(this.currentTime<this.startTime) {
             return this.status = "Waiting to Start";
         }else if((this.currentTime>this.startTime)&&(this.currentTime<=this.completeTime)){
