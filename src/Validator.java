@@ -21,16 +21,21 @@ public class Validator {
         Matcher matcher = pattern.matcher(id);
 
         // Check if the string matches the condition
-        if (matcher.matches()) {
+
+        /*if (matcher.matches()) {
+=======
+       /* if (matcher.matches()) {
+>>>>>>> Stashed changes
             usedIDs.add(id); // Add the ID to the list of used IDs
             return true;
         } else {
             return false;
-        }
+        }*/
+        return true;
     }
 
     public boolean isNumber(String str) {
-        // Regular expression to match numbers (integer or decimal)
+        // Regular expression to match numbers (integer or decimal)     //burda negatif olmasına göre exception atabiliyor muyuz????????????????
         String regex = "[0-9]*[.]?[0-9]*";   //doğru regex
 
         // Compile the regular expression
