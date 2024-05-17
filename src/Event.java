@@ -2,6 +2,32 @@ public class Event {
     private int startTime;
     private  String eventType; // (job arrives,completed vb.)
     private String details;
+    public enum EventType {
+        JOB_ARRIVAL, TASK_START, TASK_COMPLETION, JOB_COMPLETION
+    }
+
+    private long timestamp;
+    private EventType type;
+    private Job job;
+    private Task task;
+    private Station station;
+
+    public Event(long timestamp, EventType type, Job job, Task task, Station station) {
+        this.timestamp = timestamp;
+        this.type = type;
+        this.job = job;
+        this.task = task;
+        this.station = station;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    @Override
+    public int compareTo(Event other) {
+        return Long.compare(this.timestamp, other.timestamp);
+    }
     //private String status;
 
 
