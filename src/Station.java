@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Station {
@@ -11,6 +12,7 @@ public class Station {
     private String status;
     private ArrayList<Task> currentTasks = new ArrayList<Task>();  //o sırada execute olan
     private ArrayList<Task> waitingTasks = new ArrayList<Task>();  //execute olmayı bekleyen
+    private List<String> completedTasks;
 
 
     // maxcapacitye ulaşılmamışsa task ekle
@@ -18,6 +20,11 @@ public class Station {
     public boolean isStationAvailable(){
         return currentTasks.size()<maxCapacity;
 
+    }
+
+
+    public boolean canHandleTaskType(String taskType) {
+        return taskTypesHandled.contains(taskType);
     }
 
 
@@ -121,5 +128,13 @@ public class Station {
 
     public void setWaitingTasks(ArrayList<Task> waitingTasks) {
         this.waitingTasks = waitingTasks;
+    }
+
+    public List<String> getCompletedTasks() {
+        return completedTasks;
+    }
+
+    public void setCompletedTasks(List<String> completedTasks) {
+        this.completedTasks = completedTasks;
     }
 }
