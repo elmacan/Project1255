@@ -26,7 +26,7 @@ public class Station {
         this.status = "idle";
 
         //Comparator<Task> comparator = fifoFlag ? Comparator.comparingInt(Task::g) : Comparator.comparingInt(Task::);
-        this.waitingTasks = new PriorityQueue<>(comparator);
+        //this.waitingTasks = new PriorityQueue<>(comparator);
 
     }
 
