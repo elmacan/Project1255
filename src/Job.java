@@ -110,14 +110,14 @@ public class Job {
         System.out.println("Current task: " + getTasks().get(currentTaskIndex));
         System.out.println("Job status: " + this.status);
     }
-    Public void jobOrder(Job job, int startTime) {
+    /*public void jobOrder(Job job, int startTime) {
         Task firstTask = job.getNextTask();
         Station station = executionStation(firstTask);  // Method to find a suitable station
         int completionTime = calculateTaskCompletionTime(firstTask, station, startTime);
 
-        job.setCurrentStation(station);  /
+        job.setCurrentStation(station);
         eventQueue.add(new Event(Event.EventType.TASK_COMPLETE, completionTime, job));
-    }
+    }*/
 
     public void deadlinePassedOrNot(){ //deadline before/after
         if(this.completeTime>this.deadline){

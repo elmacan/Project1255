@@ -1,7 +1,8 @@
 public class Event {
     private int startTime;
-    private  String eventType; // (job arrives,completed vb.)
+    private String eventType; // (job arrives,completed vb.)
     private String details;
+
     public enum EventType {
         JOB_ARRIVAL, TASK_START, TASK_COMPLETION, JOB_COMPLETION
     }
@@ -19,8 +20,9 @@ public class Event {
         this.task = task;
         this.station = station;
     }
+}
 
-    public long getTimestamp() {
+  /*  public long getTimestamp() {
         return timestamp;
     }
 
@@ -54,4 +56,4 @@ public class Event {
     public void setDetails(String details) {
         this.details = details;
     }
-}
+}*/
