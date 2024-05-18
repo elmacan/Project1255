@@ -34,6 +34,9 @@ public class Station {
     public boolean canHandleTaskType(String taskType) {
         return completedTasks.contains(taskType);
     }
+    public void updateStatus() {
+        status = currentTasks.isEmpty() ? "idle" : "busy";
+    }
 
 
 
@@ -54,7 +57,7 @@ public class Station {
         while (currentTasks.size() < maxCapacity && !waitingTasks.isEmpty()) {
             Task task = waitingTasks.remove(0);
             currentTasks.add(task);
-            task.start(getRandomSpeed());
+            task.start(getRandomSpeed(),stationID);
         }
     }
 
