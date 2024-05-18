@@ -48,6 +48,7 @@ public class Station {
         } else {
             waitingTasks.add(task);
             task.waitingTaskStatus();
+            System.out.println("Task "+ task.getTaskType() + "is currently waiting at the station : "+ stationID);
         }
     }
     // status güncelleme

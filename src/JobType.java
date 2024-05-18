@@ -22,6 +22,9 @@ public class JobType {
         this.tasks = tasks;
         this.currentTaskIndex = currentTaskIndex;
     }
+    public void updateJobState(Job job){
+        if(currentTaskIndex >= )
+    }
 
     public String getJobTypeID() {
         return jobTypeID;

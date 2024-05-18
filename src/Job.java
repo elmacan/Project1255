@@ -8,6 +8,8 @@ public class Job {
     private int deadline; // =duration+startTime
     private int completeTime; //job ın complete olduğu zaman
     private String status;
+    private int currentTaskIndex;
+    private Task currentTaks;
 
 
 
@@ -52,6 +54,8 @@ public class Job {
         System.out.println("Not any available station");
         return null; // exception handling lazım
     }
+
+
 
 
     public String getJobID() {
@@ -108,4 +112,19 @@ public class Job {
 
     }
 
+    public int getCurrentTaskIndex() {
+        return currentTaskIndex;
+    }
+
+    public void setCurrentTaskIndex(int currentTaskIndex) {
+        this.currentTaskIndex = currentTaskIndex;
+    }
+
+    public Task getCurrentTaks() {
+        return currentTaks;
+    }
+
+    public void setCurrentTaks(Task currentTaks) {
+        this.currentTaks = currentTaks;
+    }
 }
