@@ -156,6 +156,7 @@ public class Validator {
         while (workScanner.hasNextLine()) {
             line = workScanner.nextLine();
             lineCounter++;
+            System.out.println();
             System.out.println("Line: " + line);
 
             if (line.startsWith("(TASKTYPES ")) {
@@ -172,6 +173,7 @@ public class Validator {
             } else if (line.equals("(JOBTYPES")) {
 
                 while(!(line.startsWith("(STATIONS"))) {
+
                     line = workScanner.nextLine();
                     lineCounter++;
                     String[] pieces=line.split(" ");
@@ -190,17 +192,23 @@ public class Validator {
                 }
                 continue;
             } else if (line.equals("(STATIONS")) {
-                line=workScanner.nextLine();
-                lineCounter++;
-                System.out.println("line: "+line);
-                stationsFound = true;
-                String splittedline = line.replaceAll("\\s", "");//boşlukları çıkarıyor
+                System.out.println();
+                while(workScanner.hasNextLine()){
+                    line = workScanner.nextLine();
 
-                if (!splittedline.matches("^\\((\\w[.]?)*\\)$")) {
-                    errorCollector.add("Line "+lineCounter+ ": Invalid format in STATIONS section like an error having unwanted characters or does not having the correct number of parentheses");
+                    lineCounter++;
+                    System.out.println("line: " + line);
+                    stationsFound = true;
+                    fileParser.parseStations(line);
+                    String splittedline = line.replaceAll("\\s", "");//boşlukları çıkarıyor
 
-                    return false;
+                    if (!((splittedline.matches("^\\((\\w[.]?)*\\)$")) || (splittedline.matches("^\\((\\w[.]?)*\\)\\)$")) )) {
+                        errorCollector.add("Line " + lineCounter + ": Invalid format in STATIONS section like an error having unwanted characters or does not having the correct number of parentheses");
+
+                        return false;
+                    }
                 }
+
             }
 
             if (!taskTypesFound) {

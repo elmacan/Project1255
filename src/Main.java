@@ -24,6 +24,7 @@ public class Main {
         validator.fileControl(workFileName,jobFileName);
 
         FileParser fileParser = new FileParser();
+        fileParser.printFileInfo();
 
 
 

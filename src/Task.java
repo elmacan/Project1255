@@ -10,6 +10,12 @@ public class Task {
     public Task(){
 
     }
+
+    @Override
+    public String toString() {
+        return taskType+" Size: "+taskSize;
+    }
+
     public Task(String taskType, double taskSize, double duration, String stationID, String status) {
         this.taskType = taskType;
         this.taskSize = taskSize;

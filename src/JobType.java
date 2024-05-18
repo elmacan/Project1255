@@ -8,6 +8,16 @@ public class JobType {
     //The next task in sequence for that jobtype cannot start before the current one finishes.
 
 
+    @Override
+    public String toString() {
+        String result = "Tasks:\n";
+        for (Task task : tasks) {
+            result += task.toString() + "\n";
+        }
+        return "jobType "+jobTypeID+ "\n"+result;
+
+    }
+
     public JobType(String jobTypeID, ArrayList<Task> tasks, int currentTaskIndex) {
         this.jobTypeID = jobTypeID;
         this.tasks = tasks;

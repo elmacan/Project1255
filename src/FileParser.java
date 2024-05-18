@@ -2,13 +2,18 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
+import java.util.SplittableRandom;
 
 public class FileParser {
     private static ArrayList<String> taskTypesInText = new ArrayList<>();
     private static ArrayList<JobType> jobTypesInText = new ArrayList<>();
     private static ArrayList<Station> stationsInText = new ArrayList<>();
     private static ArrayList<Job> jobsInText = new ArrayList<>();
+    private static HashMap<String, String> taskInfo = new HashMap<String, String>();
+    //private ArrayList<String> types_jt = new ArrayList<>();
+    //private ArrayList<String>sizes_jt=new ArrayList<>();
 
 
     public void parseTaskTypes(String[] pieces,String line) {
@@ -30,13 +35,19 @@ public class FileParser {
 
         }
 
-        for(String s: taskTypesInText){
-            System.out.println("pieces: "+s);
-        }
+
 
        for(int i=1;i<taskTypesInText.size();i++){
 
            if(!validator.isNumber(taskTypesInText.get(i))){
+
+               if(i + 1 < taskTypesInText.size() && validator.isNumber(taskTypesInText.get(i + 1))){
+
+                   taskInfo.put(taskTypesInText.get(i),taskTypesInText.get(i+1));
+               }
+               else{
+                   taskInfo.put(taskTypesInText.get(i)," ");
+               }
                if(!validator.isValidID(taskTypesInText.get(i))){
                    validator.addError(i + " is an invalid taskTypeID");
 
@@ -64,7 +75,9 @@ public class FileParser {
 
         }
 
-
+        for (String key : taskInfo.keySet()) {
+            System.out.println("task: " + key + " size: " + taskInfo.get(key));
+        }
 
     }
 
@@ -99,7 +112,7 @@ public class FileParser {
         }
 
         for (String s : realPieces) {
-            //System.out.println("pieces: " + s);
+            System.out.println(s);
         }
 
         JobType jobtype = new JobType();
@@ -149,12 +162,26 @@ public class FileParser {
             }
 
         }
+        System.out.println(jobtype.toString());
 
 
     }
 
-    public void parseStations(){
-        
+    public void parseStations(String line){
+        String[] pieces=splitStringBySpacesWithoutParentheses(line);
+
+       /* for(String s:pieces){
+            System.out.println(s);
+            String stationId = pieces[0];
+            int maxCapacity = Integer.parseInt(pieces[1]);
+            boolean multiFlag = pieces[2].equals("Y");
+            boolean fifoFlag =pieces[3].equals("Y");
+            HashMap<String, Double> speeds = new HashMap<>();
+            for (int i = 4; i < pieces.length; i += 2) {
+
+                speeds.put(pieces[i], Double.parseDouble(pieces[i + 1]));
+            }
+        }*/
 
     }
 
@@ -188,13 +215,23 @@ public class FileParser {
         }
     }
 
+    public void findJobTypeForJobFile(){
+       // for(int i)
+
+
+    }
 
 
 
-    public void printFile(){
-        for(int i=0;i<jobTypesInText.size();i++){
+
+    public void printFileInfo(){
+
+
+
+
+        /*for(int i=0;i<jobTypesInText.size();i++){
             jobTypesInText.get(i).printTasks();
-        }
+        }*/
 
     }
 
