@@ -24,14 +24,18 @@ public class Station {
 
     public void addTask(Task task) {
 
-        if (currentTasks.size() < maxCapacity) {
+        if (isStationAvailable()) {
             currentTasks.add(task);
             task.start(getRandomSpeed());
+
         } else {
             waitingTasks.add(task);//hhjg
         }
 
 
+    }
+    public void updateStatus(){
+        status= currentTasks.isEmpty() ? "idle" : "busy";
     }
     // waitingden removela currenttaska ekle
     public void processQueue() {
