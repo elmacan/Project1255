@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class Job{
     private String jobID; //Job1 , Job2 olan
     private JobType jobType;
@@ -8,11 +10,37 @@ public class Job{
     private String status;
 
 
+
     public Job(String jobID,JobType jobType, int startTime, int duration) {
         this.jobID = jobID;
         this.jobType=jobType;
         this.startTime = startTime;
         this.duration = duration;
+    }
+
+    public void calculateJobDuration(List<Station> stations){
+        double totalDuration=0;
+        for(Task task: jobType.getTasks()){
+            Station station =findAvailableStationForTask(task, stations);
+            if (station != null) {
+                double speed = station.getSpeedForThatTask();
+                if (station.getPlusMinus() > 0) {
+                    speed = station.getRandomSpeed();
+                }
+                double taskDuration = task.getTaskSize() / speed;
+                totalDuration += taskDuration;
+            }
+        }
+    }
+
+    private Station findAvailableStationForTask(Task task, List<Station> stations) {
+        for (Station station : stations) {
+            if (station.canHandleTaskType(task.getTaskType())) {
+                return station;
+            }
+        }
+        System.out.println("Not any available station");
+        return null; // exception handling lazım
     }
 
 
