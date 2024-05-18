@@ -23,8 +23,6 @@ public class Station {
         this.plusMinus = plusMinus;
         this.status = "idle";
 
-        //Comparator<Task> comparator = fifoFlag ? Comparator.comparingInt(Task::g) : Comparator.comparingInt(Task::);
-        //this.waitingTasks = new PriorityQueue<>(comparator);
 
     }
 
