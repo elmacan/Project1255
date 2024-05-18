@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.PriorityQueue;
-import java.util.Random;
+import java.util.*;
 
 public class Station {
     private String stationID;
@@ -15,6 +12,7 @@ public class Station {
     //private ArrayList<Task> waitingTasks = new ArrayList<Task>();  //execute olmayı bekleyen
     // waiting taski priority queue yapıyorum.
     private ArrayList<Task> waitingTasks= new ArrayList<Task>();
+    private List<String> taskTypesHandled;
 
     public Station(String stationID,int maxCapacity,boolean multiFlag,boolean fifoFlag,double speedForThatTask,double plusMinus){
         this.stationID = stationID;
@@ -65,9 +63,13 @@ public class Station {
         updateStatus();
     }
 
+    public boolean canHandleTaskType(String taskType) {
+        return taskTypesHandled.contains(taskType);
+    }
+
     //random speed maxla min arasındaki ilişki ne?
 
-    private double getRandomSpeed() {
+    public double getRandomSpeed() {
         Random random = new Random();
         double minSpeed = speedForThatTask * (1 - plusMinus);
         double maxSpeed = speedForThatTask * (1 + plusMinus);
