@@ -8,7 +8,7 @@ public class Station {
     private boolean multiFlag; // station can do more than one job?
     private boolean fifoFlag;   //waiting tasks are picked using first come first served strategy or earliest job deadline first strategy.
     private double speedForThatTask;
-    private double plusMinus; //değer yoksa constant speed
+    private Double plusMinus; //değer yoksa constant speed
     private String status;
     private ArrayList<Task> currentTasks = new ArrayList<Task>();  //o sırada execute olan
     private ArrayList<Task> waitingTasks = new ArrayList<Task>();  //execute olmayı bekleyen
@@ -22,9 +22,17 @@ public class Station {
 
     }
 
+    public double getSpeedForTask(Task task) {
+        if (this.plusMinus != null) {
+            return getRandomSpeed();
+        } else {
+            return speedForThatTask;
+        }
+    }
+
 
     public boolean canHandleTaskType(String taskType) {
-        return taskTypesHandled.contains(taskType);
+        return completedTasks.contains(taskType);
     }
 
 
