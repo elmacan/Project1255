@@ -123,6 +123,9 @@ public class Validator {
 
         }
 
+        fileParser.parseJobFile(jobFile);
+
+
 
 
         if(errorOccured){
@@ -217,6 +220,13 @@ public class Validator {
         }
         return true;
     }
+
+   /* public boolean isCorrectJobFileFormat(File jobFile){
+
+        fileParser.parseJobFile();
+
+        return true;
+    }*/
 
 
 }

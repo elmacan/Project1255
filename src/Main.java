@@ -26,7 +26,7 @@ public class Main {
         FileParser fileParser = new FileParser();
 
 
-        //validator.getErrors().add("T5 has a negative task size.");
+
 
         // Checking for errors
         if (validator.hasErrors()) {

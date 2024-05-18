@@ -1,11 +1,14 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class FileParser {
     private static ArrayList<String> taskTypesInText = new ArrayList<>();
-    private static ArrayList<Job> jobTypesInText = new ArrayList<>();
+    private static ArrayList<JobType> jobTypesInText = new ArrayList<>();
     private static ArrayList<Station> stationsInText = new ArrayList<>();
+    private static ArrayList<Job> jobsInText = new ArrayList<>();
 
 
     public void parseTaskTypes(String[] pieces,String line) {
@@ -99,10 +102,10 @@ public class FileParser {
             //System.out.println("pieces: " + s);
         }
 
-        Job job = new Job();
+        JobType jobtype = new JobType();
         if (validator.isValidID(realPieces.get(0))) {
-            job.setJobType(realPieces.get(0));
-            jobTypesInText.add(job);
+            jobtype.setJobTypeID(realPieces.get(0));
+            jobTypesInText.add(jobtype);
         } else {
             validator.addError("Line: "+lineCounter+": "+realPieces.get(0)+" is invalid JobTypeID");
 
@@ -119,7 +122,7 @@ public class FileParser {
                 if (validator.isValidID(realPieces.get(i))) {
                     Task task = new Task();
                     task.setTaskType(realPieces.get(i));
-                    job.getTasks().add(task);
+                    jobtype.getTasks().add(task);
 
                     if ((i + 1 < realPieces.size()) && (validator.isNumber(realPieces.get(i + 1)))) {
 
@@ -150,6 +153,43 @@ public class FileParser {
 
     }
 
+    public void parseStations(){
+        
+
+    }
+
+    public void parseJobFile(File jobFile) {
+        Scanner jobScanner = null;
+
+        try {
+            jobScanner = new Scanner(jobFile);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        String line;
+
+        while (jobScanner.hasNextLine()) {
+            line = jobScanner.nextLine();
+
+            System.out.println("Line: " + line);
+            String[] parts = line.split("\\s+");
+            if (parts.length == 4) {
+                String jobId = parts[0];
+               JobType jobtype=new JobType(); //buraya bak????
+               jobtype.setJobTypeID(parts[1]);
+                int startTime = Integer.parseInt(parts[2]);
+                int duration = Integer.parseInt(parts[3]);
+                Job job=new Job(jobId,jobtype,startTime,duration);
+
+
+            }
+
+        }
+    }
+
+
+
 
     public void printFile(){
         for(int i=0;i<jobTypesInText.size();i++){
@@ -167,11 +207,11 @@ public class FileParser {
         FileParser.taskTypesInText = taskTypesInText;
     }
 
-    public static ArrayList<Job> getJobTypesInText() {
+    public static ArrayList<JobType> getJobTypesInText() {
         return jobTypesInText;
     }
 
-    public static void setJobTypesInText(ArrayList<Job> jobTypesInText) {
+    public static void setJobTypesInText(ArrayList<JobType> jobTypesInText) {
         FileParser.jobTypesInText = jobTypesInText;
     }
 

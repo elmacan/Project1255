@@ -6,8 +6,9 @@ public class Event {
     public enum EventType {
         JOB_ARRIVAL, TASK_START, TASK_COMPLETION, JOB_COMPLETION
     }
+}
 
-    private long timestamp;
+   /* private long timestamp;
     private EventType type;
     private Job job;
     private Task task;
@@ -20,7 +21,7 @@ public class Event {
         this.task = task;
         this.station = station;
     }
-}
+}*/
 
   /*  public long getTimestamp() {
         return timestamp;
