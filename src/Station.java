@@ -67,6 +67,12 @@ public class Station {
         return minSpeed + (maxSpeed - minSpeed) * random.nextDouble();//
     }
 
+    public void completeTask(Task task){
+        currentTasks.remove(task);
+        task.complete(); /// current taskde tamamlanan gidiyor
+        processQueue();
+    }
+
 
     public String getStationID() {
         return stationID;

@@ -143,10 +143,10 @@ public class Job {
     }
 
     public Task getCurrentTaks() {
-        return currentTaks;
+        return currentTask;
     }
 
     public void setCurrentTaks(Task currentTaks) {
-        this.currentTaks = currentTaks;
+        this.currentTask = currentTaks;
     }
 }

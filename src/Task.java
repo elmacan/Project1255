@@ -24,6 +24,10 @@ public class Task {
         this.stationID = stationID;
         System.out.println("Task of type " + taskType + " is starting at station " + stationID + ". Duration: " + duration + " minutes.");
     }
+    public void complete() {
+        this.status = "completed";
+        System.out.println("Task of type " + taskType + " has been completed at station " + stationID + ".");
+    }
 
 
 
