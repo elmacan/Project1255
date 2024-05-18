@@ -39,6 +39,7 @@ public class Job{
                 return station;
             }
         }
+        System.out.println("Not any available station");
         return null; // exception handling lazım
     }
 
