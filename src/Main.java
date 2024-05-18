@@ -30,13 +30,17 @@ public class Main {
 
         // Checking for errors
         if (validator.hasErrors()) {
+            System.out.println("----------------------");
             System.out.println("Errors occurred:");
-            for (String error : validator.getErrors()) {
+            System.out.println("----------------------");
+            for (String error : validator.getErrorCollector()) {
                 System.out.println(error);
             }
             System.exit(1);
         } else {
+            System.out.println("---------------------");
             System.out.println("No errors detected.");
+            System.out.println("---------------------");
         }
 
         //fileParser.printFile();

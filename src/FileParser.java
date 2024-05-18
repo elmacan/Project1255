@@ -8,29 +8,57 @@ public class FileParser {
     private static ArrayList<Station> stationsInText = new ArrayList<>();
 
 
-    public void parseTaskTypes(String[] pieces) {
+    public void parseTaskTypes(String[] pieces,String line) {
         Validator validator = new Validator();
 
-
-
+        pieces=splitStringBySpacesWithoutParentheses(line);
 
         for(String s: pieces){
+
+            if(validator.iscontainsClosingParenthesis(s)){
+                char letterToRemove = ')';
+                String modifiedString = s.replace(String.valueOf(letterToRemove), "");
+                s=modifiedString;
+
+            }
             if (!s.contains("(") && !s.contains(")") && !s.contains("(TASKTYPES")) {
                 taskTypesInText.add(s);
             }
+
         }
 
         for(String s: taskTypesInText){
-            if(!validator.isValidID(s)){
-                System.out.println(s+" invalid TaskType");
+            System.out.println("pieces: "+s);
+        }
 
+       for(int i=1;i<taskTypesInText.size();i++){
+
+           if(!validator.isNumber(taskTypesInText.get(i))){
+               if(!validator.isValidID(taskTypesInText.get(i))){
+                   validator.addError(i + " is an invalid taskTypeID");
+
+               }
+               if (!validator.isUniqueID(taskTypesInText.get(i))){
+                   validator.addError(taskTypesInText.get(i) + "is listed more than once");
+
+               }
+
+
+
+           }
+
+
+            if(validator.isNumber(taskTypesInText.get(i))){
+                if(validator.isNegativeSize(taskTypesInText.get(i))){
+                    validator.addError(taskTypesInText.get(i-1)+ " has a negative size: "+taskTypesInText.get(i));
+                }
             }
 
         }
 
         if (validator.isNumber(taskTypesInText.get(0))) {
-            System.out.println("Error: TaskTypes start with a number in Line 1");
-            System.exit(1);
+            validator.addError("Line 1 : TaskTypes information starts with a number");
+
         }
 
 
@@ -47,6 +75,7 @@ public class FileParser {
 
                 if (i + 1 < taskTypesInText.size() && validator.isNumber(taskTypesInText.get(i + 1))) {
 
+
                     return Double.parseDouble(taskTypesInText.get(i + 1));
                 }
             }
@@ -55,8 +84,8 @@ public class FileParser {
     }
 
 
-
-    public  void parseJobTypes(String[] pieces,int countIndex) {
+        //boşluklara ve parantezlere en son kontrol et error için
+    public  void parseJobTypes(String[] pieces,int countIndex,int lineCounter) {
         ArrayList<String> realPieces = new ArrayList<String>();
         Validator validator = new Validator();
 
@@ -67,7 +96,7 @@ public class FileParser {
         }
 
         for (String s : realPieces) {
-            System.out.println("pieces: " + s);
+            //System.out.println("pieces: " + s);
         }
 
         Job job = new Job();
@@ -75,15 +104,18 @@ public class FileParser {
             job.setJobType(realPieces.get(0));
             jobTypesInText.add(job);
         } else {
-            System.out.println("invalid jobtypeId");
-            System.exit(1);
+            validator.addError("Line: "+lineCounter+": "+realPieces.get(0)+" is invalid JobTypeID");
 
         }
 
         int j = 0;
-        //BET declare olmamış task var mı
+
+        if(validator.isNumber(realPieces.get(0)) || validator.isNumber(realPieces.get(1))){
+            validator.addError("Line "+lineCounter+": taskTypeID not found at startup");
+        }
+
         for (int i = 1; i < realPieces.size(); i++) {
-            if (!validator.isNumber(realPieces.get(i))) { //t1 e bakan
+            if (!validator.isNumber(realPieces.get(i))) {
                 if (validator.isValidID(realPieces.get(i))) {
                     Task task = new Task();
                     task.setTaskType(realPieces.get(i));
@@ -96,7 +128,8 @@ public class FileParser {
                     } else {
 
                         if (findDefaultSizeOfTaskType(realPieces.get(i), taskTypesInText) == -1) {
-                            System.out.println(realPieces.get(i) + " has no size");
+                            validator.addError("Line "+lineCounter+": "+realPieces.get(i)+" has no default size, either a default size must be declared in TASKTYPE" +
+                                    "list or the size must be declared within the job");
 
                         } else {
 
@@ -106,6 +139,10 @@ public class FileParser {
                     }
 
                 }
+                else{
+                    validator.addError("Line "+lineCounter+": "+realPieces.get(i)+" invalid taskTypeID");
+                }
+
             }
 
         }
@@ -146,6 +183,13 @@ public class FileParser {
         FileParser.stationsInText = stationsInText;
     }
 
+    public static String[] splitStringBySpacesWithoutParentheses(String str) {
+        if (str == null || str.isEmpty()) {
+            return new String[0];  // Return an empty array if the input string is null or empty
+        }
+        str = str.replaceAll("[()]", "");
+        return str.split("\\s+");  // Split the string by one or more spaces
+    }
 
 
 

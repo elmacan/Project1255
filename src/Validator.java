@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 public class Validator {
     private static ArrayList<String> usedIDs = new ArrayList<>();
     private FileParser fileParser= new FileParser();
-    private List<String> errorCollector = new ArrayList<>();
+    private static List<String> errorCollector = new ArrayList<>();
 
 
 
@@ -22,13 +22,13 @@ public class Validator {
         return !errorCollector.isEmpty();
     }
 
-    public List<String> getErrors() {
+    public List<String> getErrorCollector() {
         return errorCollector;
     }
 
     public boolean isNumber(String str) {
         // Regular expression to match numbers (integer or decimal)     //burda negatif olmasına göre exception atabiliyor muyuz????????????????
-        String regex = "[0-9]*[.]?[0-9]*";   //doğru regex
+        String regex = "\\-?[0-9]*[.]?[0-9]*";   //doğru regex
 
         // Compile the regular expression
         Pattern pattern = Pattern.compile(regex);
@@ -69,6 +69,18 @@ public class Validator {
 
     }
 
+    public boolean isNegativeSize(String size){
+        if(Double.parseDouble(size)<0 ){
+            return true;
+        }
+        return false;
+
+    }
+
+    public  boolean iscontainsClosingParenthesis(String str) {
+
+        return str.indexOf(')') != -1;
+    }
     public void fileControl(String workFileName, String jobFileName) {
         File workFlowFile = new File(workFileName);
         File jobFile = new File(jobFileName);
@@ -105,12 +117,10 @@ public class Validator {
 
         }
 
-        if(isCorrectWorkFileFormat(workFlowFile)) {
+        if(isCorrectWorkFileFormat(workFlowFile)&&!this.hasErrors()) {
+            System.out.println("---------------------------");
             System.out.println("Correct WorkFlowFile Format");
 
-        }else {
-            System.out.println("Wrong WorkFlowFile Format ");
-            System.exit(1);
         }
 
 
@@ -124,6 +134,7 @@ public class Validator {
     }
 
     public  boolean isCorrectWorkFileFormat(File workFlowFile){
+        int lineCounter=0;
 
         int countIndex=0;
         boolean taskTypesFound = false;
@@ -141,16 +152,17 @@ public class Validator {
         //workfile dosyasını okuyan scanner objesi
         while (workScanner.hasNextLine()) {
             line = workScanner.nextLine();
+            lineCounter++;
             System.out.println("Line: " + line);
-            //BET kaçıncı line da hata verdiğini bul
 
-            if (line.startsWith("(TASKTYPES")) {
+            if (line.startsWith("(TASKTYPES ")) {
                 String[] pieces=line.split(" ");
-                fileParser.parseTaskTypes(pieces);
-                String splittedline=line.replaceAll("\\s", "");//boşlukları çıkarıyor
+                fileParser.parseTaskTypes(pieces,line);
+                String splittedline=line.replaceAll("\\s", "");//tüm boşlukları çıkarıyor
                 taskTypesFound = true;
                 if (!splittedline.matches("^\\(TASKTYPES(\\w[.]?)*\\)$")) {
-                    System.out.println("Error: Invalid format in TASKTYPES section.");
+                    errorCollector.add("Line 1: Invalid format in TASKTYPES section like an error having unwanted characters or does not having the correct number of parentheses");
+
                     return false;
                 }
                 continue;
@@ -158,15 +170,17 @@ public class Validator {
 
                 while(!(line.startsWith("(STATIONS"))) {
                     line = workScanner.nextLine();
+                    lineCounter++;
                     String[] pieces=line.split(" ");
-                    fileParser.parseJobTypes(pieces,countIndex);
+                    fileParser.parseJobTypes(pieces,countIndex,lineCounter);
                     countIndex++;
                     System.out.println("line: "+line);
                     String splittedline = line.replaceAll("\\s", "");//boşlukları çıkarıyor
                     if(splittedline.matches("^\\((\\w[.]?)*\\)\\)$"))break;
                     jobTypesFound = true;
                     if ( !((splittedline.matches("^\\((\\w[.]?)*\\)$")) || (splittedline.matches("^\\((\\w[.]?)*\\)\\)$")) )) {
-                        System.out.println("Error: Invalid format in JOBTYPES section.");
+                        errorCollector.add("Line "+lineCounter+" : Invalid format in JOBTYPES section like an error having unwanted characters or does not having the correct number of parentheses");
+
                         return false;
                     }
 
@@ -174,26 +188,28 @@ public class Validator {
                 continue;
             } else if (line.equals("(STATIONS")) {
                 line=workScanner.nextLine();
+                lineCounter++;
                 System.out.println("line: "+line);
                 stationsFound = true;
                 String splittedline = line.replaceAll("\\s", "");//boşlukları çıkarıyor
 
                 if (!splittedline.matches("^\\((\\w[.]?)*\\)$")) {
-                    System.out.println("Error: Invalid format in STATIONS section.");
+                    errorCollector.add("Line "+lineCounter+ ": Invalid format in STATIONS section like an error having unwanted characters or does not having the correct number of parentheses");
+
                     return false;
                 }
             }
 
             if (!taskTypesFound) {
-                System.out.println("Error: TASKTYPES section not found.");
+                errorCollector.add(line+"\nTASKTYPES section not found. Line should start like (TASKTYPES ");
                 return false;
             }
             if (!jobTypesFound) {
-                System.out.println("Error: JOBTYPES section not found.");
+                errorCollector.add("Error: JOBTYPES section not found. Line should start like (JOBTYPES");
                 return false;
             }
             if (!stationsFound) {
-                System.out.println("Error: STATIONS section not found.");
+                errorCollector.add("Error: STATIONS section not found. Line should start like (STATIONS");
                 return false;
             }
 
