@@ -18,9 +18,10 @@ public class Task {
         this.status = status;
     }
 //---------------------------------------
-    public void start(double speed) {
+    public void start(double speed, String stationID) {
         this.duration = taskSize / speed;
         this.status = "execute";
+        this.stationID = stationID;
         System.out.println("Task of type " + taskType + " is starting at station " + stationID + ". Duration: " + duration + " minutes.");
     }
 

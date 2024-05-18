@@ -36,11 +36,13 @@ public class Station {
     }
 
 
+
+
     public void addTask(Task task) {
 
-        if (currentTasks.size() < maxCapacity) {
+        if (isStationAvailable()) {
             currentTasks.add(task);
-            task.start(getRandomSpeed());
+            task.start(getSpeedForTask(task),stationID);
         } else {
             waitingTasks.add(task);//hhjg
         }
@@ -58,7 +60,7 @@ public class Station {
 
     //random speed maxla min arasındaki ilişki ne?
 
-    private double getRandomSpeed() {
+    public double getRandomSpeed() {
         Random random = new Random();
         double minSpeed = speedForThatTask * (1 - plusMinus);
         double maxSpeed = speedForThatTask * (1 + plusMinus);

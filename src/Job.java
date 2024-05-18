@@ -9,7 +9,7 @@ public class Job {
     private int completeTime; //job ın complete olduğu zaman
     private String status;
     private int currentTaskIndex;
-    private Task currentTaks;
+    private Task currentTask;
 
 
 
@@ -43,6 +43,10 @@ public class Job {
                 totalDuration += taskDuration;
             }
         }
+        /// ceil integera yuvarlıyor
+        this.duration= (int)Math.ceil(totalDuration);
+        this.deadline=this.startTime +this.duration;
+
     }
 
     private Station findAvailableStationForTask(Task task, List<Station> stations) {
@@ -53,6 +57,23 @@ public class Job {
         }
         System.out.println("Not any available station");
         return null; // exception handling lazım
+    }
+
+    public void jobStatusUpdate(){
+        if(currentTaskIndex >= jobType.getTasks().size()){
+            this.status ="completed";
+            this.completeTime=getCompleteTime();
+            System.out.println("Job" + jobID + " has been completed.");
+
+        }
+        if(currentTask.getStatus().equals("completed")){
+            currentTaskIndex++;
+            if(currentTaskIndex<jobType.getTasks().size()){
+                currentTask = jobType.getTasks().get(currentTaskIndex);
+                this.status= "waiting";
+                System.out.println("Job " + jobID + "is waiting to start task " + currentTask.getTaskType());
+            }
+        }
     }
 
 
@@ -91,6 +112,7 @@ public class Job {
     }
 
     public int getCompleteTime() {
+
         return completeTime;
     }
 
