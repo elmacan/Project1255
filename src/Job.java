@@ -1,6 +1,6 @@
 import java.util.List;
 
-public class Job{
+public class Job {
     private String jobID; //Job1 , Job2 olan
     private JobType jobType;
     private int startTime;
@@ -12,23 +12,26 @@ public class Job{
 
 
 
+
     @Override
     public String toString() {
 
         return "jobID "+jobID+"\n"+jobType+"JOB start time: "+startTime+" duration: "+duration;
     }
 
-    public Job(String jobID,JobType jobType, int startTime, int duration) {
+
+    public Job(String jobID, JobType jobType, int startTime, int duration) {
+
         this.jobID = jobID;
-        this.jobType=jobType;
+        this.jobType = jobType;
         this.startTime = startTime;
         this.duration = duration;
     }
 
-    public void calculateJobDuration(List<Station> stations){
-        double totalDuration=0;
-        for(Task task: jobType.getTasks()){
-            Station station =findAvailableStationForTask(task, stations);
+    public void calculateJobDuration(List<Station> stations) {
+        double totalDuration = 0;
+        for (Task task : jobType.getTasks()) {
+            Station station = findAvailableStationForTask(task, stations);
             if (station != null) {
                 double speed = station.getSpeedForThatTask();
                 if (station.getPlusMinus() > 0) {
@@ -98,4 +101,11 @@ public class Job{
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public JobType getJobType() {
+
+        return jobType;
+
+    }
+
 }
