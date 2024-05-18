@@ -11,6 +11,13 @@ public class Job{
 
 
 
+
+    @Override
+    public String toString() {
+
+        return "jobID "+jobID+"\n"+jobType+"JOB start time: "+startTime+" duration: "+duration;
+    }
+
     public Job(String jobID,JobType jobType, int startTime, int duration) {
         this.jobID = jobID;
         this.jobType=jobType;

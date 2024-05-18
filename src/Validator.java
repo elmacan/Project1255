@@ -199,7 +199,7 @@ public class Validator {
                     lineCounter++;
                     System.out.println("line: " + line);
                     stationsFound = true;
-                    fileParser.parseStations(line);
+                    fileParser.parseStations(line,lineCounter);
                     String splittedline = line.replaceAll("\\s", "");//boşlukları çıkarıyor
 
                     if (!((splittedline.matches("^\\((\\w[.]?)*\\)$")) || (splittedline.matches("^\\((\\w[.]?)*\\)\\)$")) )) {

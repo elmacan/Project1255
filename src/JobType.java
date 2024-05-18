@@ -17,7 +17,6 @@ public class JobType {
         return "jobType "+jobTypeID+ "\n"+result;
 
     }
-
     public JobType(String jobTypeID, ArrayList<Task> tasks, int currentTaskIndex) {
         this.jobTypeID = jobTypeID;
         this.tasks = tasks;

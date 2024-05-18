@@ -14,6 +14,9 @@ public class Station {
     private ArrayList<Task> waitingTasks= new ArrayList<Task>();
     private List<String> taskTypesHandled;
 
+    public Station(){
+
+    }
     public Station(String stationID,int maxCapacity,boolean multiFlag,boolean fifoFlag,double speedForThatTask,double plusMinus){
         this.stationID = stationID;
         this.maxCapacity = maxCapacity;

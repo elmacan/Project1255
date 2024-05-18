@@ -48,32 +48,7 @@ public class Main {
 
 
 
-
-        /*
-            // Parse input files
-    parseWorkflowFile(args[0]);
-    parseJobFile(args[1]);
-
-    // Initialize simulation
-    for (Job job : jobs) {
-        eventQueue.add(new Event(Event.EventType.JOB_START, job.getStartTime(), job));
     }
-
-    // Start processing events
-    processEvents();
-
-    // After all events are processed, print final statistics
-    printSystemState();
-    calculateStatistics();
-         */
-
-
-
-
-
-
-    }
-
 
 
 }
