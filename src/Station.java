@@ -1,4 +1,5 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class Station {
     private String stationID;
@@ -9,25 +10,7 @@ public class Station {
     private double plusMinus; //değer yoksa constant speed
     private String status;
     private ArrayList<Task> currentTasks = new ArrayList<Task>();  //o sırada execute olan
-    //private ArrayList<Task> waitingTasks = new ArrayList<Task>();  //execute olmayı bekleyen
-    // waiting taski priority queue yapıyorum.
-    private ArrayList<Task> waitingTasks= new ArrayList<Task>();
-    private List<String> taskTypesHandled;
-
-    public Station(){
-
-    }
-    public Station(String stationID,int maxCapacity,boolean multiFlag,boolean fifoFlag,double speedForThatTask,double plusMinus){
-        this.stationID = stationID;
-        this.maxCapacity = maxCapacity;
-        this.multiFlag = multiFlag;
-        this.fifoFlag = fifoFlag;
-        this.speedForThatTask = speedForThatTask;
-        this.plusMinus = plusMinus;
-        this.status = "idle";
-
-
-    }
+    private ArrayList<Task> waitingTasks = new ArrayList<Task>();  //execute olmayı bekleyen
 
 
     // maxcapacitye ulaşılmamışsa task ekle
@@ -37,23 +20,17 @@ public class Station {
 
     }
 
-// stationa task ekleyip status değişiyo
+
     public void addTask(Task task) {
 
-        if (isStationAvailable()) {
+        if (currentTasks.size() < maxCapacity) {
             currentTasks.add(task);
             task.start(getRandomSpeed());
-            updateStatus();
-
         } else {
-            waitingTasks.add(task);
-            task.waitingTaskStatus();
-            System.out.println("Task "+ task.getTaskType() + "is currently waiting at the station : "+ stationID);
+            waitingTasks.add(task);//hhjg
         }
-    }
-    // status güncelleme
-    public void updateStatus(){
-        status= currentTasks.isEmpty() ? "idle" : "busy";
+
+
     }
     // waitingden removela currenttaska ekle
     public void processQueue() {
@@ -62,16 +39,11 @@ public class Station {
             currentTasks.add(task);
             task.start(getRandomSpeed());
         }
-        updateStatus();
-    }
-
-    public boolean canHandleTaskType(String taskType) {
-        return taskTypesHandled.contains(taskType);
     }
 
     //random speed maxla min arasındaki ilişki ne?
 
-    public double getRandomSpeed() {
+    private double getRandomSpeed() {
         Random random = new Random();
         double minSpeed = speedForThatTask * (1 - plusMinus);
         double maxSpeed = speedForThatTask * (1 + plusMinus);

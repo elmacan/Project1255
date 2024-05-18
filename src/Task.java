@@ -7,16 +7,9 @@ public class Task {
     private String status;  //wait,execute,complete
 
 
-
     public Task(){
 
     }
-
-    @Override
-    public String toString() {
-        return taskType+" Size: "+taskSize;
-    }
-
     public Task(String taskType, double taskSize, double duration, String stationID, String status) {
         this.taskType = taskType;
         this.taskSize = taskSize;
@@ -29,13 +22,6 @@ public class Task {
         this.duration = taskSize / speed;
         this.status = "execute";
         System.out.println("Task of type " + taskType + " is starting at station " + stationID + ". Duration: " + duration + " minutes.");
-    }
-
-    public void completedTasKStatus(){
-        setStatus("completed");
-    }
-    public void waitingTaskStatus(){
-        setStatus("waiting task");
     }
 
 
