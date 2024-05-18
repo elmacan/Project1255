@@ -63,3 +63,72 @@ public class Event {
         this.details = details;
     }
 }*/
+
+
+
+
+
+/* ece
+void processEvents() {
+    while (!eventQueue.isEmpty()) {
+        Event currentEvent = eventQueue.poll();
+        System.out.println("Handling event at time: " + currentEvent.time);
+
+        switch (currentEvent.type) {
+            case JOB_START:
+                handleJobStart(currentEvent.job, currentEvent.time);
+                break;
+            case TASK_COMPLETE:
+                handleTaskCompletion(currentEvent.job, currentEvent.time);
+                break;
+        }
+    }
+}
+
+void handleJobStart(Job job, int startTime) {
+    // Assign the first task of the job to a suitable station
+    // Add a TASK_COMPLETE event based on task duration and station speed
+}
+
+void handleTaskCompletion(Job job, int completionTime) {
+   job.completeCurrentTask(completionTime);  // Mark the current task as complete
+    if (job.hasMoreTasks()) {
+        Task nextTask = job.getNextTask();
+        Station nextStation = findStationForTask(nextTask);
+        int nextCompletionTime = calculateTaskCompletionTime(nextTask, nextStation, completionTime);
+
+        job.setCurrentStation(nextStation);
+        eventQueue.add(new Event(Event.EventType.TASK_COMPLETE, nextCompletionTime, job));
+    } else {
+        job.setCompletionTime(completionTime);
+        System.out.println("Job " + job.getId() + " completed at time " + completionTime);
+    }
+}
+
+ */
+
+/* ece2
+void printSystemState() {
+    // Print current state of jobs and stations
+}
+
+void calculateStatistics() {
+    double totalTardiness = 0;
+    int tardyJobs = 0;
+    for (Job job : jobs) {
+        if (job.getCompletionTime() > job.getDeadline()) {
+            totalTardiness += job.getCompletionTime() - job.getDeadline();
+            tardyJobs++;
+        }
+    }
+    double averageTardiness = tardyJobs > 0 ? totalTardiness / tardyJobs : 0;
+    System.out.println("Average Tardiness: " + averageTardiness);
+    calculateStationUtilization();
+}
+void calculateStationUtilization() {
+    for (Station station : stations) {
+        double utilization = (double) station.getActiveTime() / (currentSimulationTime - simulationStartTime);
+        System.out.println("Station " + station.getId() + " Utilization: " + (utilization * 100) + "%");
+    }
+
+ */
