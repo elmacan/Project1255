@@ -2,9 +2,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
-
+import java.util.Calendar;
 public class FileParser {
+    private List<Job> parsedJobs = new ArrayList<>();
     private static ArrayList<String> taskTypesInText = new ArrayList<>();
     private static ArrayList<JobType> jobTypesInText = new ArrayList<>();
     private static ArrayList<Station> stationsInText = new ArrayList<>();
@@ -282,6 +284,44 @@ public class FileParser {
         }
 
     }
+    public List<Job> parseJobFile(String fileName) {
+        List<Job> parsedJobs = new ArrayList<>(); // Initialize parsedJobs list
+        // Implement the logic to parse the job file with the given file name
+        // Create a File object from the file name and parse it
+        File jobFile = new File(fileName);
+        // Implement parsing logic...
+        // Add parsed jobs to the parsedJobs list
+        // Example:
+        // parsedJobs.add(new Job(...));
+        // Return the list of parsed jobs
+        return parsedJobs;
+    }
+    private int getCurrentTime() {
+        // Get the current system time using Calendar
+        Calendar currentTime = Calendar.getInstance();
+
+        // Extract the hour and minute from the current time
+        int hour = currentTime.get(Calendar.HOUR_OF_DAY); // 24-hour clock
+        int minute = currentTime.get(Calendar.MINUTE);
+
+        // Convert the current time to minutes since midnight
+        int currentTimeInMinutes = hour * 60 + minute;
+
+        return currentTimeInMinutes;
+    }
+    public List<Job> getOverdueJobs() {
+        List<Job> overdueJobs = new ArrayList<>();
+        int currentTime = getCurrentTime(); // Method to get current time, implement as needed
+
+        for (Job job : parsedJobs) {
+            if (job.getCompleteTime() > job.getDeadline()) {
+                overdueJobs.add(job);
+            }
+        }
+
+        return overdueJobs;
+    }
+
 
 
 }
