@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.PriorityQueue;
 import java.util.Random;
 
 public class Station {
@@ -10,8 +12,23 @@ public class Station {
     private double plusMinus; //değer yoksa constant speed
     private String status;
     private ArrayList<Task> currentTasks = new ArrayList<Task>();  //o sırada execute olan
-    private ArrayList<Task> waitingTasks = new ArrayList<Task>();  //execute olmayı bekleyen
+    //private ArrayList<Task> waitingTasks = new ArrayList<Task>();  //execute olmayı bekleyen
+    // waiting taski priority queue yapıyorum.
+    private PriorityQueue<Task> waitingTasks;
 
+    public Station(String stationID,int maxCapacity,boolean multiFlag,boolean fifoFlag,double speedForThatTask,double plusMinus){
+        this.stationID = stationID;
+        this.maxCapacity = maxCapacity;
+        this.multiFlag = multiFlag;
+        this.fifoFlag = fifoFlag;
+        this.speedForThatTask = speedForThatTask;
+        this.plusMinus = plusMinus;
+        this.status = "idle";
+
+        //Comparator<Task> comparator = fifoFlag ? Comparator.comparingInt(Task::g) : Comparator.comparingInt(Task::);
+        this.waitingTasks = new PriorityQueue<>(comparator);
+
+    }
 
 
     // maxcapacitye ulaşılmamışsa task ekle
@@ -27,12 +44,12 @@ public class Station {
         if (isStationAvailable()) {
             currentTasks.add(task);
             task.start(getRandomSpeed());
+            updateStatus();
 
         } else {
-            waitingTasks.add(task);//hhjg
+            waitingTasks.add(task);
+            task.waitingTaskStatus();
         }
-
-
     }
     public void updateStatus(){
         status= currentTasks.isEmpty() ? "idle" : "busy";
@@ -44,6 +61,7 @@ public class Station {
             currentTasks.add(task);
             task.start(getRandomSpeed());
         }
+        updateStatus();
     }
 
     //random speed maxla min arasındaki ilişki ne?
