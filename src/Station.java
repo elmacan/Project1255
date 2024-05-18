@@ -14,7 +14,7 @@ public class Station {
     private ArrayList<Task> currentTasks = new ArrayList<Task>();  //o sırada execute olan
     //private ArrayList<Task> waitingTasks = new ArrayList<Task>();  //execute olmayı bekleyen
     // waiting taski priority queue yapıyorum.
-    private PriorityQueue<Task> waitingTasks;
+    private ArrayList<Task> waitingTasks= new ArrayList<Task>();
 
     public Station(String stationID,int maxCapacity,boolean multiFlag,boolean fifoFlag,double speedForThatTask,double plusMinus){
         this.stationID = stationID;
@@ -38,7 +38,7 @@ public class Station {
 
     }
 
-
+// stationa task ekleyip status değişiyo
     public void addTask(Task task) {
 
         if (isStationAvailable()) {
@@ -51,6 +51,7 @@ public class Station {
             task.waitingTaskStatus();
         }
     }
+    // status güncelleme
     public void updateStatus(){
         status= currentTasks.isEmpty() ? "idle" : "busy";
     }
