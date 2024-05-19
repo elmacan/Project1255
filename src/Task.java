@@ -14,6 +14,10 @@ public class Task {
         this.taskSize = taskSize;
 
     }
+
+
+
+
 //---------------------------------------
     public void start(double speed, String stationID) {
         this.duration = taskSize / speed;

@@ -49,7 +49,6 @@ public class Station {
             waitingTasks.add(task);//hhjg
         }
 
-
     }
     // waitingden removela currenttaska ekle
     public void processQueue() {
