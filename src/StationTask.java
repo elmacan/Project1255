@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class StationTask {
     private String taskTypeID; //TaskType tasktype mı tam emin değilim
     private double stationSpeed; //station speed o task için
@@ -54,9 +56,6 @@ public class StationTask {
     }
 }
 
-    public static double calculateTaskDuration(Station station) {
-        //Station stationT = station.ge
-        return 0.0;
-    }
+
 }
 
