@@ -17,7 +17,7 @@ public class Station {
 
     // maxcapacitye ulaşılmamışsa task ekle
 
-    public boolean isStationAvailable(){
+    /*public boolean isStationAvailable(){
         return currentTasks.size()<maxCapacity;
 
     }
@@ -80,7 +80,7 @@ public class Station {
         currentTasks.remove(jobTypeTask);
         jobTypeTask.complete(); /// current taskde tamamlanan gidiyor
         processQueue();
-    }
+    }*/
 
 
     public String getStationID() {
