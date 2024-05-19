@@ -24,6 +24,7 @@ public class JobType {
     }
 
 
+
     public String getJobTypeID() {
         return jobTypeID;
     }

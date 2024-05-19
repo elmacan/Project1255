@@ -57,24 +57,7 @@ public class Job {
         }
     }
 
-    public void calculateJobDuration(List<Station> stations) {
-        double totalDuration = 0;
-        for (JobTypeTask jobTypeTask : jobType.getTasks()) {
-            Station station = findAvailableStationForTask(jobTypeTask, stations);
-            if (station != null) {
-                double speed = station.getSpeedForThatTask();
-                if (station.getPlusMinus() > 0) {
-                    speed = station.getRandomSpeed();
-                }
-                double taskDuration = jobTypeTask.getTaskSize() / speed;
-                totalDuration += taskDuration;
-            }
-        }
-        /// ceil integera yuvarlıyor
-        this.duration= (int)Math.ceil(totalDuration);
-        this.deadline=this.startTime +this.duration;
 
-    }
 
     private Station findAvailableStationForTask(JobTypeTask jobTypeTask, List<Station> stations) {
         for (Station station : stations) {
@@ -86,7 +69,7 @@ public class Job {
         return null; // exception handling lazım
     }
 ////// extra status check oldu
- public void jobStatusUpdate(){
+ /*public void jobStatusUpdate(){
         if(currentTaskIndex >= jobType.getTasks().size()){
             this.status ="completed";
             this.completeTime=getCompleteTime();
@@ -101,7 +84,7 @@ public class Job {
                 System.out.println("Job " + jobID + "is waiting to start task " + currentJobTypeTask.getTaskType());
             }
         }
-    }
+    }*/
 
 
 

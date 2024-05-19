@@ -181,6 +181,7 @@ public class FileParser {
 
         Validator validator = new Validator();
 
+
         if (validator.isValidID(pieces[0])) {
             String stationId = pieces[0];
 

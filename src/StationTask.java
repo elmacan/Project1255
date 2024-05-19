@@ -15,11 +15,13 @@ public class StationTask {
 
     }
 
+
     public StationTask(String taskTypeID, double stationSpeed, Double plusMinus) {
         this.taskTypeID = taskTypeID;
         this.stationSpeed = stationSpeed;
         this.plusMinus = plusMinus;
     }
+
 
 ////// calculating task duration for that station
     public double calculateTaskDuration(double taskSize){
@@ -31,6 +33,7 @@ public class StationTask {
         }
         return taskSize/defaultspeed;
     }
+
 
 
 

@@ -29,6 +29,8 @@ public class Main {
 
 
 
+
+
         // Checking for errors
         if (validator.hasErrors()) {
             System.out.println("----------------------");
@@ -63,6 +65,7 @@ public class Main {
             System.out.println(job.calculateJobDuration());
         }
 */
+
 
     }
 
