@@ -13,6 +13,7 @@ public class FileParser {
     private static HashMap<String, String> taskInfo = new HashMap<String, String>();
     private static List<TaskType> taskTypesInText= new ArrayList<>();
 
+
     public static ArrayList<String> getStringTaskTypesInText() {
         return stringTaskTypesInText;
     }
@@ -202,23 +203,39 @@ public class FileParser {
 
         if (validator.isValidID(pieces[0])) {
             String stationId = pieces[0];
+
+
         } else {
             validator.addError("Line " + lineCounter + ": " + pieces[0] + " invalid StationID");
         }
 
+        String stationId = pieces[0];
         int maxCapacity = Integer.parseInt(pieces[1]);
         boolean multiFlag = pieces[2].equals("Y");
         boolean fifoFlag = pieces[3].equals("Y");
-        HashMap<String, Double> speeds = new HashMap<>();
 
-        Station station = new Station();
+        Station station = new Station(stationId,maxCapacity,multiFlag,fifoFlag);
+
+
+
 
         for (int i = 4; i < pieces.length; i++) {
             if (!validator.isNumber(pieces[i])) {
 
+                String taskTypeID=pieces[i];
+                double speed= Double.parseDouble(pieces[++i]);
+                Double plusMinus=null;
+
+                if(i+1<pieces.length && validator.isNumber(pieces[i+1])){
+                    plusMinus= Double.valueOf(pieces[i+1]);
+                }
+
+                station.getStationTasks().add(new StationTask(taskTypeID,speed,plusMinus));
             }
 
         }
+
+        stationsInText.add(station);
 
 
     }
@@ -280,6 +297,11 @@ public class FileParser {
         for (int i = 0; i < jobsInText.size(); i++) {
             System.out.println(jobsInText.get(i).toString());
             System.out.println();
+        }
+
+        System.out.println("--------------STATION INFO-----------");
+        for(int i=0;i<stationsInText.size();i++){
+            System.out.println(stationsInText.get(i).toString());
         }
 
     }

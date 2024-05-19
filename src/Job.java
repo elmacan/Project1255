@@ -29,7 +29,7 @@ public class Job {
         this.startTime = startTime;
         this.duration = duration;
     }
-    public void isDeadlinePassed(){
+   /* public void isDeadlinePassed(){
         if (this.duration>this.deadline){
             int a = this.duration - this.deadline;
             System.out.println("This task has exceeded its deadline by: " + a);
