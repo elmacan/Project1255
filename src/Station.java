@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Random;
 
 public class Station {
     private String stationID;
@@ -11,6 +12,11 @@ public class Station {
     private List<StationTask> stationTasks = new ArrayList<>();
     private Queue<Job> waitingQueue = new LinkedList<>();
     private List<Job> jobsInExecution = new ArrayList<>();
+    private double speedForThatTask; // Base speed for tasks
+    private Double plusMinus; // Speed variance percentage (e.g., 0.1 for ±10%)
+
+    public Station(String stationId, int maxCapacity, boolean multiFlag, boolean fifoFlag) {
+    }
 
 
     @Override
@@ -24,11 +30,39 @@ public class Station {
 
     }
 
-    public Station(String stationID, int maxCapacity, boolean multiFlag, boolean fifoFlag) {
+    public Station(String stationID, int maxCapacity, boolean multiFlag, boolean fifoFlag,double speedForThatTask, Double plusMinus) {
         this.stationID = stationID;
         this.maxCapacity = maxCapacity;
         this.multiFlag = multiFlag;
         this.fifoFlag = fifoFlag;
+        this.speedForThatTask = speedForThatTask;
+        this.plusMinus = plusMinus;
+    }
+    public double getSpeedForThatTask() {
+        if (this.plusMinus != null) {
+            return getRandomSpeed();
+        } else {
+            return speedForThatTask;
+        }
+    }
+    public Double getPlusMinus() {
+        return plusMinus;
+    }
+
+    double getRandomSpeed() {
+        Random random = new Random();
+        double minSpeed = speedForThatTask * (1 - plusMinus);
+        double maxSpeed = speedForThatTask * (1 + plusMinus);
+        return minSpeed + (maxSpeed - minSpeed) * random.nextDouble();
+    }
+
+    public boolean canHandleTaskType(String taskType) {
+        for (StationTask task : stationTasks) {
+            if (task.getTaskTypeID().equals(taskType)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 
@@ -99,6 +133,8 @@ public class Station {
             System.out.println(job);
         }
     }
+
+
 
     ///
 

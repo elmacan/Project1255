@@ -31,7 +31,12 @@ public class Job {
         this.jobType = jobType;
         this.startTime = startTime;
         this.duration = duration;
+        this.deadline = startTime + duration;this.deadline = startTime + duration;
     }
+
+
+
+
    public void isDeadlinePassed(){
         if (this.duration>this.deadline){
             int a = this.duration - this.deadline;

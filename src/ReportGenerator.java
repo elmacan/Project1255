@@ -1,18 +1,25 @@
 import java.util.List;
+
 public class ReportGenerator {
 
     public void generateReport(List<Job> completedJobs, List<Job> overdueJobs) {
         System.out.println("=== Simulation Report ===");
-        if (completedJobs == null) {
-            System.out.println("No completed jobs."); // Handle the case when completedJobs is null
-        } else {
-            System.out.println("Completed Jobs:");
+        System.out.println("Completed Jobs:");
+        if (completedJobs != null) {
             for (Job job : completedJobs) {
                 System.out.println("Job ID: " + job.getJobID() + ", Job Type: " + job.getJobType().getJobTypeID() + ", Complete Time: " + job.getCompleteTime());
             }
+        } else {
+            System.out.println("No completed jobs.");
         }
-        // Similar null check for overdueJobs
+
+        System.out.println("\nOverdue Jobs:");
+        if (overdueJobs != null) {
+            for (Job job : overdueJobs) {
+                System.out.println("Job ID: " + job.getJobID() + ", Job Type: " + job.getJobType().getJobTypeID() + ", Deadline: " + job.getDeadline());
+            }
+        } else {
+            System.out.println("No overdue jobs.");
+        }
     }
 }
-
-
