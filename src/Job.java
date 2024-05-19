@@ -77,8 +77,8 @@ public class Job {
         System.out.println("Not any available station");
         return null; // exception handling lazım
     }
-
-    public void jobStatusUpdate(){
+////// extra status check oldu
+    /*public void jobStatusUpdate(){
         if(currentTaskIndex >= jobType.getTasks().size()){
             this.status ="completed";
             this.completeTime=getCompleteTime();
@@ -93,7 +93,7 @@ public class Job {
                 System.out.println("Job " + jobID + "is waiting to start task " + currentTask.getTaskType());
             }
         }
-    }
+    }*/
 
 
 
