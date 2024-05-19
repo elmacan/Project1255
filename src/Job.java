@@ -3,15 +3,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Job {
-    private String jobID; //Job1 , Job2 olan
+    private String jobID; //Job1 , Job2
     private JobType jobType;
     private int startTime;
     private int duration;  //Each job has a duration (minutes) in which it must be completed once it arrives.
     private int deadline; // =duration+startTime
-    private int completeTime; //job ın complete olduğu zaman
+    private int completeTime;
     private String status;
     private int currentTaskIndex;
     private JobTypeTask currentJobTypeTask;
+    private int currentTime; //bir seye gore yapilmasi lazim
 
 
 
@@ -25,13 +26,14 @@ public class Job {
     }
 
 
-    public Job(String jobID, JobType jobType, int startTime, int duration) {
+    public Job(String jobID, JobType jobType, int startTime, int duration, JobTypeTask currentJobTypeTask) {
 
         this.jobID = jobID;
         this.jobType = jobType;
         this.startTime = startTime;
         this.duration = duration;
         this.deadline = startTime + duration;this.deadline = startTime + duration;
+        this.currentJobTypeTask = currentJobTypeTask;
     }
 
 
@@ -47,14 +49,23 @@ public class Job {
             System.out.println("This task finished early by " + a);
         }
     }
-    public void  JobStateTrack(){
-        if(currentTaskIndex< jobType.getTasks().size()){
+    public void  JobStateTrack(JobTypeTask currentTask){
+        if(startTime< currentTime){
             this.status="Waiting to Start";
             System.out.println("Job " + jobID + " is waiting to start.");
-        }else if(currentTaskIndex == jobType.getTasks().size()){
+        }else if(startTime == currentTime){
             this.status="In progress";
             System.out.println("Job "+ jobID + " is being executed.");
+        }else{
+            this.status = "complete";
+            currentTaskIndex++;
+            System.out.println("Job "+ jobID + " is complete.");
         }
+    }
+    public void printJobState(String status, JobTypeTask currentJobTypeTask){
+        System.out.println("Job ID: " +  this.jobID );
+        System.out.println("Current task: " + currentJobTypeTask);
+        System.out.println("Job status: " + this.status);
     }
 
 
@@ -68,6 +79,7 @@ public class Job {
         System.out.println("Not any available station");
         return null; // exception handling lazım
     }
+
 
  public void jobStatusUpdate(){
         if(currentTaskIndex >= jobType.getTasks().size()){
@@ -88,6 +100,9 @@ public class Job {
 
 
 
+
+
+    
 
     public String getJobID() {
         return jobID;
@@ -152,13 +167,22 @@ public class Job {
         this.currentTaskIndex = currentTaskIndex;
     }
 
-    public JobTypeTask getCurrentTaks() {
+    public JobTypeTask getCurrentTask() {
         return currentJobTypeTask;
     }
 
-    public void setCurrentTaks(JobTypeTask currentTaks) {
-        this.currentJobTypeTask = currentTaks;
+    public void setCurrentTask(JobTypeTask currentTask) {
+        this.currentJobTypeTask = currentTask;
     }
+    public int getCurrentTime() {
+        return currentTime;
+    }
+
+    public void setCurrentTime(int currentTime) {
+        this.currentTime = currentTime;
+    }
+
+
 
 
 }
