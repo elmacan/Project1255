@@ -10,8 +10,8 @@ public class Station {
     private boolean multiFlag; // station can do more than one job?
     private boolean fifoFlag;   //waiting tasks are picked using first come first served strategy or earliest job deadline first strategy.
     private ArrayList<StationTask> stationTasks = new ArrayList<>();
-    private ArrayList<Job> waitingQueue = new ArrayList<>();
-    private ArrayList<Job> jobsInExecution = new ArrayList<>();
+    private ArrayList<StationTask> waitingQueue = new ArrayList<>();
+    private ArrayList<StationTask> tasksInExecution = new ArrayList<>();
     private String stationStatus;
 
 
@@ -48,12 +48,36 @@ public class Station {
         return false;
     }
     private void updateStationStatus() {
-        if (jobsInExecution.isEmpty() && waitingQueue.isEmpty()) {
+        if (tasksInExecution.isEmpty() && waitingQueue.isEmpty()) {
             stationStatus = "idle";
         } else {
             stationStatus = "busy";
         }
     }
+
+    public ArrayList<StationTask> taskExecution(){
+        for (StationTask task : stationTasks) {
+            if(canHandleTaskType(task.getTaskTypeID())){
+                waitingQueue.add(task);
+            }
+        }
+        return waitingQueue;
+    }
+
+    public void printStatus() {
+        System.out.println("Station " + stationID + " status:");
+        for (StationTask task : tasksInExecution) {
+            System.out.println(task);
+        }
+        System.out.println("Waiting queue:");
+        for (StationTask task : waitingQueue) {
+            System.out.println(task);
+        }
+    }
+
+
+
+
 
 
 
