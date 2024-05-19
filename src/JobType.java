@@ -52,16 +52,6 @@ public class JobType {
 
     }
 
-    public void printTasks() {
-        System.out.println();
-        System.out.println("jobtype: " + this.jobTypeID);
-        for (int i = 0; i < jobTypeTasks.size(); i++) {
-
-            System.out.print("   task: " + jobTypeTasks.get(i).getTaskType());
-            System.out.println("   size: " + jobTypeTasks.get(i).getTaskSize());
-
-        }
-    }
 }
 
 

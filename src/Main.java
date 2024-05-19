@@ -47,7 +47,7 @@ public class Main {
         //fileParser.printFile();
         // Create FileParser and ReportGenerator instances
 
-        FileParser fileParser2 = new FileParser();
+       /* FileParser fileParser2 = new FileParser();
         ReportGenerator reportGenerator = new ReportGenerator();
 
         // Parse job file and get completed and overdue jobs
@@ -55,12 +55,9 @@ public class Main {
         List<Job> overdueJobs = fileParser2.getOverdueJobs(); // Ensure this method is implemented in FileParser
 
         // Generate and print simulation report
-        reportGenerator.generateReport(completedJobs, overdueJobs);
-        while( Job  job != null){
-            System.out.println(job.isDeadlinePassed());
-            System.out.println(job.jobStateTrack());
-            System.out.println(job.calculateJobDuration());
-        }
+        reportGenerator.generateReport(completedJobs, overdueJobs);*/
+
+
     }
 
 
