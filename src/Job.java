@@ -29,6 +29,25 @@ public class Job {
         this.startTime = startTime;
         this.duration = duration;
     }
+    public void isDeadlinePassed(){
+        if (this.duration>this.deadline){
+            int a = this.duration - this.deadline;
+            System.out.println("This task has exceeded its deadline by: " + a);
+
+        }else if(this.duration<this.deadline){
+            int a = this.deadline - this.duration;
+            System.out.println("This task finished early by " + a);
+        }
+    }
+    public void  JobStateTrack(){
+        if(currentTaskIndex< jobType.getTasks().size()){
+            this.status="Waiting to Start";
+            System.out.println("Job " + jobID + " is waiting to start.");
+        }else if(currentTaskIndex == jobType.getTasks().size()){
+            this.status="In progress";
+            System.out.println("Job "+ jobID + " is being executed.");
+        }
+    }
 
     public void calculateJobDuration(List<Station> stations) {
         double totalDuration = 0;

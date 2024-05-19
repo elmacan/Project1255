@@ -60,6 +60,13 @@ public class Station {
             task.start(getRandomSpeed(),stationID);
         }
     }
+    public void stationStatus() {
+        if (isStationAvailable()) {
+            status = "waiting to be executed";
+        }else{
+            status = "in execution";
+        }
+    }
 
     //random speed maxla min arasındaki ilişki ne?
 
