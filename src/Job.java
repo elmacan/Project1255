@@ -29,7 +29,7 @@ public class Job {
         this.startTime = startTime;
         this.duration = duration;
     }
-   /* public void isDeadlinePassed(){
+   public void isDeadlinePassed(){
         if (this.duration>this.deadline){
             int a = this.duration - this.deadline;
             System.out.println("This task has exceeded its deadline by: " + a);
@@ -78,22 +78,22 @@ public class Job {
         return null; // exception handling lazım
     }
 ////// extra status check oldu
-    /*public void jobStatusUpdate(){
+ public void jobStatusUpdate(){
         if(currentTaskIndex >= jobType.getTasks().size()){
             this.status ="completed";
             this.completeTime=getCompleteTime();
             System.out.println("Job" + jobID + " has been completed.");
 
         }
-        if(currentTask.getStatus().equals("completed")){
+        if(currentJobTypeTask.getStatus().equals("completed")){
             currentTaskIndex++;
             if(currentTaskIndex<jobType.getTasks().size()){
-                currentTask = jobType.getTasks().get(currentTaskIndex);
+                currentJobTypeTask = jobType.getTasks().get(currentTaskIndex);
                 this.status= "waiting";
-                System.out.println("Job " + jobID + "is waiting to start task " + currentTask.getTaskType());
+                System.out.println("Job " + jobID + "is waiting to start task " + currentJobTypeTask.getTaskType());
             }
         }
-    }*/
+    }
 
 
 
