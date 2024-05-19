@@ -30,6 +30,9 @@ public class Station {
         this.multiFlag = multiFlag;
         this.fifoFlag = fifoFlag;
     }
+
+
+    // stationa task ekleme
     public void addStationTask(StationTask stationTask) {
         this.stationTasks.add(stationTask);
     }
@@ -83,6 +86,18 @@ public class Station {
         }
         System.out.println("There is no such a task in this station!");
         return null;
+    }
+
+
+    public void printStatus() {
+        System.out.println("Station " + stationID + " status:");
+        for (Job job : jobsInExecution) {
+            System.out.println(job);
+        }
+        System.out.println("Waiting queue:");
+        for (Job job : waitingQueue) {
+            System.out.println(job);
+        }
     }
 
     ///
