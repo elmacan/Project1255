@@ -23,6 +23,7 @@ public class Main {
         Validator validator=new Validator();
         validator.fileControl(workFileName,jobFileName);
 
+
         FileParser fileParser = new FileParser();
         fileParser.printFileInfo();
 
@@ -47,7 +48,7 @@ public class Main {
         //fileParser.printFile();
         // Create FileParser and ReportGenerator instances
 
-        FileParser fileParser2 = new FileParser();
+        /*FileParser fileParser2 = new FileParser();
         ReportGenerator reportGenerator = new ReportGenerator();
 
         // Parse job file and get completed and overdue jobs
@@ -55,7 +56,7 @@ public class Main {
         List<Job> overdueJobs = fileParser2.getOverdueJobs(); // Ensure this method is implemented in FileParser
 
         // Generate and print simulation report
-        reportGenerator.generateReport(completedJobs, overdueJobs);
+        reportGenerator.generateReport(completedJobs, overdueJobs);*/
 
 
     }

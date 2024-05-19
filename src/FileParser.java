@@ -17,14 +17,7 @@ public class FileParser {
     public FileParser() {
         this.parsedJobs = new ArrayList<>();
     }
-    public List<Job> parseJobFile(String fileName) {
-        // Implement the logic to parse the job file with the given file name
-        // Create a File object from the file name and parse it
-        File jobFile = new File(fileName);
-        // Implement parsing logic...
-        // Return the list of parsed jobs
-        return parsedJobs;
-    }
+
 
     public static ArrayList<String> getStringTaskTypesInText() {
         return stringTaskTypesInText;
@@ -61,20 +54,9 @@ public class FileParser {
     public void parseTaskTypes(String[] pieces, String line) {
         Validator validator = new Validator();
 
-        pieces = splitStringBySpacesWithoutParentheses(line);
-
-
         for (String s : pieces) {
 
-            if (validator.iscontainsClosingParenthesis(s)) {
-                char letterToRemove = ')';
-                String modifiedString = s.replace(String.valueOf(letterToRemove), "");
-                s = modifiedString;
-
-            }
-            if (!s.contains("(") && !s.contains(")") && !s.contains("(TASKTYPES")) {
-                stringTaskTypesInText.add(s);
-            }
+            stringTaskTypesInText.add(s);
 
         }
 
@@ -115,9 +97,6 @@ public class FileParser {
 
         }
 
-        for (String key : taskInfo.keySet()) {
-            System.out.println("task: " + key + " size: " + taskInfo.get(key));
-        }
 
     }
 
@@ -139,18 +118,12 @@ public class FileParser {
     }
 
     //boşluklara ve parantezlere en son kontrol et error için
-    public void parseJobTypes(String[] pieces, int countIndex, int lineCounter) {
+    public void parseJobTypes(String[] pieces, int countIndex, int lineCounter,String line) {
         ArrayList<String> realPieces = new ArrayList<String>();
         Validator validator = new Validator();
 
-        for (String s : pieces) {
-            if (!s.contains("(") && !s.contains(")")) {
-                realPieces.add(s);
-            }
-        }
-
-        for (String s : realPieces) {
-            System.out.println(s);
+        for(String s:pieces){
+            realPieces.add(s);
         }
 
         JobType jobtype = new JobType();
@@ -204,14 +177,9 @@ public class FileParser {
 
     }
 
-    public void parseStations(String line, int lineCounter) {
-        String[] pieces = splitStringBySpacesWithoutParentheses(line);
+    public void parseStations(String[] pieces,String line, int lineCounter) {
+
         Validator validator = new Validator();
-
-        for (String s : pieces) {
-            System.out.println(s);
-
-        }
 
         if (validator.isValidID(pieces[0])) {
             String stationId = pieces[0];
@@ -267,7 +235,7 @@ public class FileParser {
         while (jobScanner.hasNextLine()) {
             line = jobScanner.nextLine();
 
-            System.out.println("Line: " + line);
+            //System.out.println("Line: " + line);
             String[] parts = line.split("\\s+");
             if (parts.length == 4) {
                 String jobId = parts[0];
@@ -304,6 +272,25 @@ public class FileParser {
     }
 
     public void printFileInfo() {
+        System.out.println("----------------TaskType INFO--------------");
+        System.out.println("in mixed order");
+        for (String key : taskInfo.keySet()) {
+            System.out.println("task: " + key + " size: " + taskInfo.get(key));
+        }
+
+        System.out.println();
+        System.out.println("---------------JobType INFO------------");
+        for(int i=0;i<jobTypesInText.size();i++){
+            System.out.println(jobTypesInText.get(i).toString());
+
+        }
+
+        System.out.println();
+        System.out.println("--------------STATION INFO-----------");
+        for(int i=0;i<stationsInText.size();i++){
+            System.out.println(stationsInText.get(i).toString());
+        }
+
         System.out.println();
         System.out.println("---------------JobFile INFO-------------");
         for (int i = 0; i < jobsInText.size(); i++) {
@@ -311,12 +298,11 @@ public class FileParser {
             System.out.println();
         }
 
-        System.out.println("--------------STATION INFO-----------");
-        for(int i=0;i<stationsInText.size();i++){
-            System.out.println(stationsInText.get(i).toString());
-        }
+
 
     }
+
+
 
 
     public List<Job> getOverdueJobs() {

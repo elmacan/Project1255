@@ -117,13 +117,13 @@ public class Validator {
 
         }
 
-        if(isCorrectWorkFileFormat(workFlowFile)&&!this.hasErrors()) {
-            System.out.println("---------------------------");
-            System.out.println("Correct WorkFlowFile Format");
+       if(isCorrectWorkFileFormat(workFlowFile)&&!this.hasErrors()) {
+            //System.out.println("---------------------------");
+            //System.out.println("Correct WorkFlowFile Format");
 
         }
 
-        fileParser.parseJobFile(jobFile);
+         fileParser.parseJobFile(jobFile);
 
 
 
@@ -157,18 +157,20 @@ public class Validator {
             line = workScanner.nextLine();
             lineCounter++;
             System.out.println();
-            System.out.println("Line: " + line);
+           // System.out.println("Line: " + line);
 
             if (line.startsWith("(TASKTYPES ")) {
-                String[] pieces=line.split(" ");
+                line = line.substring("TASKTYPES".length()).trim();
+                String[] pieces = splitIntoParts(line);
                 fileParser.parseTaskTypes(pieces,line);
-                String splittedline=line.replaceAll("\\s", "");//tüm boşlukları çıkarıyor
                 taskTypesFound = true;
+
+                /*String splittedline=line.replaceAll("\\s", "");//tüm boşlukları çıkarıyor
                 if (!splittedline.matches("^\\(TASKTYPES(\\w[.]?)*\\)$")) {
                     errorCollector.add("Line 1: Invalid format in TASKTYPES section like an error having unwanted characters or does not having the correct number of parentheses");
 
                     return false;
-                }
+                }*/
                 continue;
             } else if (line.equals("(JOBTYPES")) {
 
@@ -176,10 +178,11 @@ public class Validator {
 
                     line = workScanner.nextLine();
                     lineCounter++;
-                    String[] pieces=line.split(" ");
-                    fileParser.parseJobTypes(pieces,countIndex,lineCounter);
+                    jobTypesFound = true;
+                    String[] pieces = splitIntoParts(line);
+                    fileParser.parseJobTypes(pieces, countIndex, lineCounter, line);
                     countIndex++;
-                    System.out.println("line: "+line);
+                    //System.out.println("line: "+line);
                     String splittedline = line.replaceAll("\\s", "");//boşlukları çıkarıyor
                     if(splittedline.matches("^\\((\\w[.]?)*\\)\\)$"))break;
                     jobTypesFound = true;
@@ -197,31 +200,38 @@ public class Validator {
                     line = workScanner.nextLine();
 
                     lineCounter++;
-                    System.out.println("line: " + line);
+                    //System.out.println("line: " + line);
                     stationsFound = true;
-                    fileParser.parseStations(line,lineCounter);
-                    String splittedline = line.replaceAll("\\s", "");//boşlukları çıkarıyor
+                    String[] pieces = splitIntoParts(line);
+                    fileParser.parseStations(pieces, line, lineCounter);
+                   /* String splittedline = line.replaceAll("\\s", "");//boşlukları çıkarıyor
 
                     if (!((splittedline.matches("^\\((\\w[.]?)*\\)$")) || (splittedline.matches("^\\((\\w[.]?)*\\)\\)$")) )) {
                         errorCollector.add("Line " + lineCounter + ": Invalid format in STATIONS section like an error having unwanted characters or does not having the correct number of parentheses");
 
                         return false;
-                    }
+                    }*/
                 }
 
             }
 
+            int parenthesesErrorLine = checkParenthesesError(lineCounter, taskTypesFound, jobTypesFound, stationsFound);
+            if (parenthesesErrorLine != -1) {
+                errorCollector.add("Line:"+parenthesesErrorLine+" Parentheses error detected" + parenthesesErrorLine);
+            }
+
             if (!taskTypesFound) {
                 errorCollector.add(line+"\nTASKTYPES section not found. Line should start like (TASKTYPES ");
-                return false;
+                System.exit(1);
+
             }
             if (!jobTypesFound) {
                 errorCollector.add("Error: JOBTYPES section not found. Line should start like (JOBTYPES");
-                return false;
+                System.exit(1);
             }
             if (!stationsFound) {
                 errorCollector.add("Error: STATIONS section not found. Line should start like (STATIONS");
-                return false;
+                System.exit(1);
             }
 
 
@@ -229,12 +239,34 @@ public class Validator {
         return true;
     }
 
-   /* public boolean isCorrectJobFileFormat(File jobFile){
+    public static String[] splitIntoParts(String line) {
+        // Remove parentheses
+        line = line.replace("(", "").replace(")", "").trim();
 
-        fileParser.parseJobFile();
+        String[] parts = line.split("\\s+");
 
-        return true;
-    }*/
+        return parts;
+    }
+
+    public int checkParenthesesError(int lineCounter, boolean taskTypesFound, boolean jobTypesFound, boolean stationsFound) {
+        int expectedClosedParentheses = 0;
+        if (taskTypesFound) {
+            expectedClosedParentheses++;
+        }
+        if (jobTypesFound) {
+            expectedClosedParentheses++;
+        }
+        if (stationsFound) {
+            expectedClosedParentheses++;
+        }
+
+        int actualClosedParentheses = lineCounter - expectedClosedParentheses;
+        if (actualClosedParentheses != 0) {
+            return lineCounter;
+        } else {
+            return -1;
+        }
+    }
 
 
 }
