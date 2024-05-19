@@ -1,15 +1,14 @@
-import java.util.ArrayList;
-public class Task {
+public class JobTypeTask {
     private String taskType; //TaskType tasktype mı emin değilim
     private double taskSize;
 
     public String toString() {
         return taskType+" Size: "+taskSize;
     }
-    public Task(){
+    public JobTypeTask(){
 
     }
-    public Task(String taskType, double taskSize) {
+    public JobTypeTask(String taskType, double taskSize) {
         this.taskType = taskType;
         this.taskSize = taskSize;
 

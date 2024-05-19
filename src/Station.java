@@ -22,7 +22,7 @@ public class Station {
 
     }
 
-    public double getSpeedForTask(Task task) {
+    public double getSpeedForTask(JobTypeTask jobTypeTask) {
         if (this.plusMinus != null) {
             return getRandomSpeed();
         } else {
@@ -41,22 +41,22 @@ public class Station {
 
 
 
-    public void addTask(Task task) {
+    public void addTask(JobTypeTask jobTypeTask) {
 
         if (isStationAvailable()) {
-            currentTasks.add(task);
-            task.start(getSpeedForTask(task),stationID);
+            currentTasks.add(jobTypeTask);
+            jobTypeTask.start(getSpeedForTask(jobTypeTask),stationID);
         } else {
-            waitingTasks.add(task);//hhjg
+            waitingTasks.add(jobTypeTask);//hhjg
         }
 
     }
     // waitingden removela currenttaska ekle
     public void processQueue() {
         while (currentTasks.size() < maxCapacity && !waitingTasks.isEmpty()) {
-            Task task = waitingTasks.remove(0);
-            currentTasks.add(task);
-            task.start(getRandomSpeed(),stationID);
+            JobTypeTask jobTypeTask = waitingTasks.remove(0);
+            currentTasks.add(jobTypeTask);
+            jobTypeTask.start(getRandomSpeed(),stationID);
         }
     }
     public void stationStatus() {
@@ -76,9 +76,9 @@ public class Station {
         return minSpeed + (maxSpeed - minSpeed) * random.nextDouble();//
     }
 
-    public void completeTask(Task task){
-        currentTasks.remove(task);
-        task.complete(); /// current taskde tamamlanan gidiyor
+    public void completeTask(JobTypeTask jobTypeTask){
+        currentTasks.remove(jobTypeTask);
+        jobTypeTask.complete(); /// current taskde tamamlanan gidiyor
         processQueue();
     }
 
@@ -139,20 +139,20 @@ public class Station {
         this.status = status;
     }
 
-    public ArrayList<Task> getCurrentTasks() {
+    public ArrayList<JobTypeTask> getCurrentTasks() {
         return currentTasks;
     }
 
-    public void setCurrentTasks(ArrayList<Task> currentTasks) {
-        this.currentTasks = currentTasks;
+    public void setCurrentTasks(ArrayList<JobTypeTask> currentJobTypeTasks) {
+        this.currentTasks = currentJobTypeTasks;
     }
 
-    public ArrayList<Task> getWaitingTasks() {
+    public ArrayList<JobTypeTask> getWaitingTasks() {
         return waitingTasks;
     }
 
-    public void setWaitingTasks(ArrayList<Task> waitingTasks) {
-        this.waitingTasks = waitingTasks;
+    public void setWaitingTasks(ArrayList<JobTypeTask> waitingJobTypeTasks) {
+        this.waitingTasks = waitingJobTypeTasks;
     }
 
     public List<String> getCompletedTasks() {
