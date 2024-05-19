@@ -43,13 +43,6 @@ public class FileParser {
         FileParser.stationsInText = stationsInText;
     }
 
-    public static String[] splitStringBySpacesWithoutParentheses(String str) {
-        if (str == null || str.isEmpty()) {
-            return new String[0];  // Return an empty array if the input string is null or empty
-        }
-        str = str.replaceAll("[()]", "");
-        return str.split("\\s+");  // Split the string by one or more spaces
-    }
 
     public void parseTaskTypes(String[] pieces, String line) {
         Validator validator = new Validator();

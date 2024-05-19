@@ -46,27 +46,31 @@ public class Main {
             System.out.println("---------------------");
         }
 
-        //fileParser.printFile();
-        // Create FileParser and ReportGenerator instances
 
-       /* FileParser fileParser2 = new FileParser();
-        ReportGenerator reportGenerator = new ReportGenerator();
 
-        // Parse job file and get completed and overdue jobs
-        List<Job> completedJobs = fileParser2.parseJobFile(jobFileName);
-        List<Job> overdueJobs = fileParser2.getOverdueJobs(); // Ensure this method is implemented in FileParser
 
-        // Generate and print simulation report
-        reportGenerator.generateReport(completedJobs, overdueJobs);*/
-        /*Job job=new Job();
-        while( Job  job != null){
-            System.out.println(job.isDeadlinePassed());
-            System.out.println(job.jobStateTrack());
-            System.out.println(job.calculateJobDuration());
+
+
+    }
+    public void generateReport(List<Job> completedJobs, List<Job> overdueJobs) {
+        System.out.println("=== Simulation Report ===");
+        System.out.println("Completed Jobs:");
+        if (completedJobs != null) {
+            for (Job job : completedJobs) {
+                System.out.println("Job ID: " + job.getJobID() + ", Job Type: " + job.getJobType().getJobTypeID() + ", Complete Time: " + job.getCompleteTime());
+            }
+        } else {
+            System.out.println("No completed jobs.");
         }
-*/
 
-
+        System.out.println("\nOverdue Jobs:");
+        if (overdueJobs != null) {
+            for (Job job : overdueJobs) {
+                System.out.println("Job ID: " + job.getJobID() + ", Job Type: " + job.getJobType().getJobTypeID() + ", Deadline: " + job.getDeadline());
+            }
+        } else {
+            System.out.println("No overdue jobs.");
+        }
     }
 
 

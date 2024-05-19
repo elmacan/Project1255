@@ -56,7 +56,7 @@ public class JobType {
 }
 
 
-   /* public Task getNextTask(Task tasks) {
+   public Task getNextTask(Task tasks) {
         int i = currentTaskIndex + 1;
         return getTasks().get(i);
     }
@@ -95,4 +95,4 @@ public class JobType {
         }
     }
 }
-*/
+

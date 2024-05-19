@@ -3,12 +3,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Job {
-    private String jobID; //Job1 , Job2 olan
+    private String jobID; //Job1 , Job2
     private JobType jobType;
     private int startTime;
     private int duration;  //Each job has a duration (minutes) in which it must be completed once it arrives.
     private int deadline; // =duration+startTime
-    private int completeTime; //job ın complete olduğu zaman
+    private int completeTime;
     private String status;
     private int currentTaskIndex;
     private JobTypeTask currentJobTypeTask;
@@ -68,8 +68,8 @@ public class Job {
         System.out.println("Not any available station");
         return null; // exception handling lazım
     }
-////// extra status check oldu
- /*public void jobStatusUpdate(){
+
+ public void jobStatusUpdate(){
         if(currentTaskIndex >= jobType.getTasks().size()){
             this.status ="completed";
             this.completeTime=getCompleteTime();
@@ -84,7 +84,7 @@ public class Job {
                 System.out.println("Job " + jobID + "is waiting to start task " + currentJobTypeTask.getTaskType());
             }
         }
-    }*/
+    }
 
 
 
