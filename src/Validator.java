@@ -214,29 +214,35 @@ public class Validator {
                 }
 
             }
-
-            int parenthesesErrorLine = checkParenthesesError(lineCounter, taskTypesFound, jobTypesFound, stationsFound);
+            /*int parenthesesErrorLine = checkParenthesesError(lineCounter, taskTypesFound, jobTypesFound, stationsFound);
             if (parenthesesErrorLine != -1) {
-                errorCollector.add("Line:"+parenthesesErrorLine+" Parentheses error detected" + parenthesesErrorLine);
-            }
+                errorCollector.add("Parentheses error detected at line: " + parenthesesErrorLine);
+            }*/
+
 
             if (!taskTypesFound) {
-                errorCollector.add(line+"\nTASKTYPES section not found. Line should start like (TASKTYPES ");
+                System.out.println("TASKTYPES section not found. Line should start like (TASKTYPES ");
                 System.exit(1);
 
             }
             if (!jobTypesFound) {
-                errorCollector.add("Error: JOBTYPES section not found. Line should start like (JOBTYPES");
+                System.out.println("Error: JOBTYPES section not found. Line should start like (JOBTYPES");
                 System.exit(1);
             }
             if (!stationsFound) {
-                errorCollector.add("Error: STATIONS section not found. Line should start like (STATIONS");
+                System.out.println("Error: STATIONS section not found. Line should start like (STATIONS");
                 System.exit(1);
             }
 
 
+
         }
+
+
+
         return true;
+
+
     }
 
     public static String[] splitIntoParts(String line) {
@@ -248,7 +254,8 @@ public class Validator {
         return parts;
     }
 
-    public int checkParenthesesError(int lineCounter, boolean taskTypesFound, boolean jobTypesFound, boolean stationsFound) {
+
+    public static int checkParenthesesError(int lineCounter, boolean taskTypesFound, boolean jobTypesFound, boolean stationsFound) {
         int expectedClosedParentheses = 0;
         if (taskTypesFound) {
             expectedClosedParentheses++;

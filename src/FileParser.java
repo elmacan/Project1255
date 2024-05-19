@@ -137,10 +137,10 @@ public class FileParser {
 
         int j = 0;
 
-        if (validator.isNumber(realPieces.get(0)) || validator.isNumber(realPieces.get(1))) {
+       /* if (validator.isNumber(realPieces.get(0)) || validator.isNumber(realPieces.get(1))) {
             validator.addError("Line " + lineCounter + ": taskTypeID not found at startup");
         }
-
+*/
         for (int i = 1; i < realPieces.size(); i++) {
             if (!validator.isNumber(realPieces.get(i))) {
                 if (validator.isValidID(realPieces.get(i))) {
@@ -172,7 +172,7 @@ public class FileParser {
             }
 
         }
-        System.out.println(jobtype.toString());
+        //System.out.println(jobtype.toString());
 
 
     }
