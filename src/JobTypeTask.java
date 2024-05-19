@@ -1,14 +1,13 @@
-import java.util.ArrayList;
-public class Task {
-    private String taskType;
+public class JobTypeTask {
+    private String taskTypeıd;
     private double taskSize;
-    private double duration;   // =task size/station speed for that task
-    private String stationID; //hangi stationda execute olacağı
-    private String status;  //wait,execute,complete
+    // =task size/station speed for that task
+   // private String stationID; //hangi stationda execute olacağı
+    //private String status;  //wait,execute,complete
 
 
 
-    public Task(){
+    public JobTypeTask(){
 
     }
 
@@ -17,7 +16,7 @@ public class Task {
         return taskType+" Size: "+taskSize;
     }
 
-    public Task(String taskType, double taskSize, double duration, String stationID, String status) {
+    public JobTypeTask(String taskType, double taskSize, double duration, String stationID, String status) {
         this.taskType = taskType;
         this.taskSize = taskSize;
         this.duration = duration;

@@ -1,9 +1,10 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class JobType {
 
     private String jobTypeID; //J1,J2 olan
-    private ArrayList<Task> tasks = new ArrayList<Task>();  //each job type is a sequence of tasks that must be executed one at a time
+    private  List<JobTypeTask> jobTypeTasks = new ArrayList<JobTypeTask>();  //each job type is a sequence of tasks that must be executed one at a time
     private int currentTaskIndex;
     //The next task in sequence for that jobtype cannot start before the current one finishes.
 
@@ -11,15 +12,15 @@ public class JobType {
     @Override
     public String toString() {
         String result = "Tasks:\n";
-        for (Task task : tasks) {
-            result += task.toString() + "\n";
+        for (JobTypeTask jobTypeTask : jobTypeTasks) {
+            result += jobTypeTask.toString() + "\n";
         }
         return "jobType "+jobTypeID+ "\n"+result;
 
     }
-    public JobType(String jobTypeID, ArrayList<Task> tasks, int currentTaskIndex) {
+    public JobType(String jobTypeID, ArrayList<JobTypeTask> jobTypeTasks, int currentTaskIndex) {
         this.jobTypeID = jobTypeID;
-        this.tasks = tasks;
+        this.jobTypeTasks = jobTypeTasks;
         this.currentTaskIndex = currentTaskIndex;
     }
 
@@ -31,12 +32,12 @@ public class JobType {
         this.jobTypeID = jobTypeID;
     }
 
-    public ArrayList<Task> getTasks() {
-        return tasks;
+    public ArrayList<JobTypeTask> getTasks() {
+        return jobTypeTasks;
     }
 
-    public void setTasks(ArrayList<Task> tasks) {
-        this.tasks = tasks;
+    public void setTasks(ArrayList<JobTypeTask> jobTypeTasks) {
+        this.jobTypeTasks = jobTypeTasks;
     }
 
     public int getCurrentTaskIndex() {
@@ -54,10 +55,10 @@ public class JobType {
     public void printTasks() {
         System.out.println();
         System.out.println("jobtype: " + this.jobTypeID);
-        for (int i = 0; i < tasks.size(); i++) {
+        for (int i = 0; i < jobTypeTasks.size(); i++) {
 
-            System.out.print("   task: " + tasks.get(i).getTaskType());
-            System.out.println("   size: " + tasks.get(i).getTaskSize());
+            System.out.print("   task: " + jobTypeTasks.get(i).getTaskType());
+            System.out.println("   size: " + jobTypeTasks.get(i).getTaskSize());
 
         }
     }

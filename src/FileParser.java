@@ -9,7 +9,8 @@ public class FileParser {
     private static ArrayList<JobType> jobTypesInText = new ArrayList<>();
     private static ArrayList<Station> stationsInText = new ArrayList<>();
     private static ArrayList<Job> jobsInText = new ArrayList<>();
-    private static HashMap<String, String> taskInfo = new HashMap<String, String>();
+    private static Map<String, String> taskInfo = new HashMap<String, String>();
+    private static ArrayList<JobTypeTask> usedJobTypeTasks = new ArrayList<>();
     //private ArrayList<String> types_jt = new ArrayList<>();
     //private ArrayList<String>sizes_jt=new ArrayList<>();
 
@@ -157,13 +158,14 @@ public class FileParser {
         for (int i = 1; i < realPieces.size(); i++) {
             if (!validator.isNumber(realPieces.get(i))) {
                 if (validator.isValidID(realPieces.get(i))) {
-                    Task task = new Task();
-                    task.setTaskType(realPieces.get(i));
-                    jobtype.getTasks().add(task);
+                    JobTypeTask jobTypeTask = new JobTypeTask();
+                    jobTypeTask.setTaskType(realPieces.get(i));
+                    usedJobTypeTasks.add(jobTypeTask);
+                    jobtype.getTasks().add(jobTypeTask);
 
                     if ((i + 1 < realPieces.size()) && (validator.isNumber(realPieces.get(i + 1)))) {
 
-                        task.setTaskSize(Double.parseDouble(realPieces.get(i + 1)));
+                        jobTypeTask.setTaskSize(Double.parseDouble(realPieces.get(i + 1)));
                         //job.getTasks().add(task);
                     } else {
 
@@ -173,7 +175,7 @@ public class FileParser {
 
                         } else {
 
-                            task.setTaskSize(findDefaultSizeOfTaskType(realPieces.get(i), taskTypesInText));
+                            jobTypeTask.setTaskSize(findDefaultSizeOfTaskType(realPieces.get(i), taskTypesInText));
                             //job.getTasks().add(task);
                         }
                     }
@@ -279,6 +281,10 @@ public class FileParser {
         for (int i = 0; i < jobsInText.size(); i++) {
             System.out.println(jobsInText.get(i).toString());
             System.out.println();
+        }
+
+        for(int i = 0; i< usedJobTypeTasks.size(); i++){
+            System.out.println("kullanılanlar "+ usedJobTypeTasks.get(i));
         }
 
     }

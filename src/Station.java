@@ -8,10 +8,11 @@ public class Station {
     private double speedForThatTask;
     private double plusMinus; //değer yoksa constant speed
     private String status;
-    private ArrayList<Task> currentTasks = new ArrayList<Task>();  //o sırada execute olan
+    //private ArrayList<String>
+    private ArrayList<JobTypeTask> currentJobTypeTasks = new ArrayList<JobTypeTask>();  //o sırada execute olan
     //private ArrayList<Task> waitingTasks = new ArrayList<Task>();  //execute olmayı bekleyen
     // waiting taski priority queue yapıyorum.
-    private ArrayList<Task> waitingTasks= new ArrayList<Task>();
+    private ArrayList<JobTypeTask> waitingJobTypeTasks = new ArrayList<JobTypeTask>();
     private List<String> taskTypesHandled;
 
     public Station(){
@@ -33,33 +34,33 @@ public class Station {
     // maxcapacitye ulaşılmamışsa task ekle
 
     public boolean isStationAvailable(){
-        return currentTasks.size()<maxCapacity;
+        return currentJobTypeTasks.size()<maxCapacity;
 
     }
 
 // stationa task ekleyip status değişiyo
-    public void addTask(Task task) {
+    public void addTask(JobTypeTask jobTypeTask) {
 
         if (isStationAvailable()) {
-            currentTasks.add(task);
-            task.start(getRandomSpeed());
+            currentJobTypeTasks.add(jobTypeTask);
+            jobTypeTask.start(getRandomSpeed());
             updateStatus();
 
         } else {
-            waitingTasks.add(task);
-            task.waitingTaskStatus();
+            waitingJobTypeTasks.add(jobTypeTask);
+            jobTypeTask.waitingTaskStatus();
         }
     }
     // status güncelleme
     public void updateStatus(){
-        status= currentTasks.isEmpty() ? "idle" : "busy";
+        status= currentJobTypeTasks.isEmpty() ? "idle" : "busy";
     }
     // waitingden removela currenttaska ekle
     public void processQueue() {
-        while (currentTasks.size() < maxCapacity && !waitingTasks.isEmpty()) {
-            Task task = waitingTasks.remove(0);
-            currentTasks.add(task);
-            task.start(getRandomSpeed());
+        while (currentJobTypeTasks.size() < maxCapacity && !waitingJobTypeTasks.isEmpty()) {
+            JobTypeTask jobTypeTask = waitingJobTypeTasks.remove(0);
+            currentJobTypeTasks.add(jobTypeTask);
+            jobTypeTask.start(getRandomSpeed());
         }
         updateStatus();
     }
@@ -134,19 +135,19 @@ public class Station {
         this.status = status;
     }
 
-    public ArrayList<Task> getCurrentTasks() {
-        return currentTasks;
+    public ArrayList<JobTypeTask> getCurrentTasks() {
+        return currentJobTypeTasks;
     }
 
-    public void setCurrentTasks(ArrayList<Task> currentTasks) {
-        this.currentTasks = currentTasks;
+    public void setCurrentTasks(ArrayList<JobTypeTask> currentJobTypeTasks) {
+        this.currentJobTypeTasks = currentJobTypeTasks;
     }
 
-    public ArrayList<Task> getWaitingTasks() {
-        return waitingTasks;
+    public ArrayList<JobTypeTask> getWaitingTasks() {
+        return waitingJobTypeTasks;
     }
 
-    public void setWaitingTasks(ArrayList<Task> waitingTasks) {
-        this.waitingTasks = waitingTasks;
+    public void setWaitingTasks(ArrayList<JobTypeTask> waitingJobTypeTasks) {
+        this.waitingJobTypeTasks = waitingJobTypeTasks;
     }
 }

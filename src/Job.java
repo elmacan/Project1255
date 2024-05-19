@@ -30,22 +30,22 @@ public class Job {
 
     public void calculateJobDuration(List<Station> stations) {
         double totalDuration = 0;
-        for (Task task : jobType.getTasks()) {
-            Station station = findAvailableStationForTask(task, stations);
+        for (JobTypeTask jobTypeTask : jobType.getTasks()) {
+            Station station = findAvailableStationForTask(jobTypeTask, stations);
             if (station != null) {
                 double speed = station.getSpeedForThatTask();
                 if (station.getPlusMinus() > 0) {
                     speed = station.getRandomSpeed();
                 }
-                double taskDuration = task.getTaskSize() / speed;
+                double taskDuration = jobTypeTask.getTaskSize() / speed;
                 totalDuration += taskDuration;
             }
         }
     }
 
-    private Station findAvailableStationForTask(Task task, List<Station> stations) {
+    private Station findAvailableStationForTask(JobTypeTask jobTypeTask, List<Station> stations) {
         for (Station station : stations) {
-            if (station.canHandleTaskType(task.getTaskType())) {
+            if (station.canHandleTaskType(jobTypeTask.getTaskType())) {
                 return station;
             }
         }
