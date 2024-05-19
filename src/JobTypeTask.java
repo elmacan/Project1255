@@ -59,6 +59,13 @@ public class JobTypeTask {
     public void setStatus(String status) {
         this.status = status;
     }
+    public void jobOrder(Job job, int startTime) {
+        TaskType firstTask = job.getNextTask();
+        Station station = executionStation(firstTask);  // Method to find a suitable station
+        int completionTime = job.completeTime(firstTask, station, startTime);
+
+        job.getCurrentStation(station);
+    }
 
 
 }

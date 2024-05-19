@@ -52,28 +52,13 @@ public class JobType {
     public JobType() {
 
     }
-
-}
-
-
-   public Task getNextTask(Task tasks) {
-        int i = currentTaskIndex + 1;
+    public TaskType getNextTask(TaskType tasks) {
+        int i = getCurrentTaskIndex() + 1;
         return getTasks().get(i);
     }
 
-    public void printJobState(String status){
-        System.out.println("Job ID: " +  this.jobTypeID );
-        System.out.println("Current task: " + getTasks().get(currentTaskIndex));
-        System.out.println("Job status: " + this.status);
-    }
-    //public void jobOrder(Job job, int startTime) {
-      //  Task firstTask = job.getNextTask();
-        //Station station = executionStation(firstTask);  // Method to find a suitable station
-       // int completionTime = completetionTime(firstTask, station, startTime);
 
-        //job.setCurrentStation(station);  /
-       // eventQueue.add(new Event(Event.EventType.TASK_COMPLETE, completionTime, job));
-   // }
+
 
     public void deadlinePassedOrNot(){ //deadline before/after
         if(this.completeTime>this.deadline){
@@ -84,15 +69,16 @@ public class JobType {
     }
 
 
-    }
-    public String stateOfJob() { //Jobun sa
-        if(this.currentTime<this.startTime) {
-            return this.status = "Waiting to Start";
-        }else if((this.currentTime>this.startTime)&&(this.currentTime<=this.completeTime)){
-            return this.status = "In Progress";
-        }else{
-            return this.status = "Completed";
-        }
+}
+public String stateOfJob() { //Jobun sa
+    if(this.currentTime<this.startTime) {
+        return this.status = "Waiting to Start";
+    }else if((this.currentTime>this.startTime)&&(this.currentTime<=this.completeTime)){
+        return this.status = "In Progress";
+    }else{
+        return this.status = "Completed";
     }
 }
+
+
 
