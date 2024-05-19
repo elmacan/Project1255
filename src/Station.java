@@ -1,7 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
 public class Station {
     private String stationID;
     private int maxCapacity; //how many jobs it can do
@@ -13,11 +11,11 @@ public class Station {
     @Override
     public String toString() {
 
-        return  stationID +
+        return stationID +
                 "  maxCapacity: " + maxCapacity +
                 "  multiFlag: " + multiFlag +
                 "  fifoFlag: " + fifoFlag +
-                " " + stationTasks ;
+                " " + stationTasks;
 
     }
 
@@ -67,18 +65,18 @@ public class Station {
     public void setStationTasks(List<StationTask> stationTasks) {
         this.stationTasks = stationTasks;
     }
-}
 
 
-    public StationTask getStationTaskByID(String taskTypeID){
-        for(StationTask stationTask: stationTasks) {
-            if(stationTask.getTaskTypeID().equals(taskTypeID)) {
+    public StationTask getStationTaskByID(String taskTypeID) {
+        for (StationTask stationTask : stationTasks) {
+            if (stationTask.getTaskTypeID().equals(taskTypeID)) {
                 return stationTask;
             }
             System.out.println("There is no such a task in this station!");
             return null;
         }
     }
+}
 
     //private List<StationTask> currentTasks = new ArrayList<StationTask>();  //?
     //private List<StationTask> waitingTasks = new ArrayList<StationTask>();  //?
@@ -152,3 +150,5 @@ public class Station {
         processQueue();
     }*/
 
+
+}

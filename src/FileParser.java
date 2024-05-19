@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Scanner;
 
 public class FileParser {
-    private static ArrayList<String> stringTaskTypesInText = new ArrayList<>();
-    private static ArrayList<JobType> jobTypesInText = new ArrayList<>();
-    private static ArrayList<Station> stationsInText = new ArrayList<>();
-    private static ArrayList<Job> jobsInText = new ArrayList<>();
-    private static HashMap<String, String> taskInfo = new HashMap<String, String>();
+    private static ArrayList<String> stringTaskTypesInText = new ArrayList<>(); //tasktype line parçaları
+    private static ArrayList<JobType> jobTypesInText = new ArrayList<>();   //job type objeleri
+    private static ArrayList<Station> stationsInText = new ArrayList<>();  //station objeleri
+    private static ArrayList<Job> jobsInText = new ArrayList<>();   //job objeleri
+    private static HashMap<String, String> taskInfo = new HashMap<String, String>();  //tasktype linedaki task type ve size
     private static List<TaskType> taskTypesInText= new ArrayList<>();
 
 

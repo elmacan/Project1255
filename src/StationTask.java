@@ -8,7 +8,7 @@ public class StationTask {
     public String toString() {
         return " " + taskTypeID +
                 " taskTypeSpeed: " + stationSpeed +
-                " plusMinus " + plusMinus ;
+                " plusMinus " + plusMinus;
 
     }
 
@@ -33,16 +33,10 @@ public class StationTask {
     public void setPlusMinus(double plusMinus) {
         this.plusMinus = plusMinus;
     }
-    public static double calculateTaskDuration(Station station){
-        Station stationT = station.ge
-    }
 
-
-    public String getTaskTypeID() {
-        return taskTypeID;
-    }
-
-    public void setTaskTypeID(String taskTypeID) {
-        this.taskTypeID = taskTypeID;
+    public static double calculateTaskDuration(Station station) {
+        //Station stationT = station.ge
+        return 0.0;
     }
 }
+
