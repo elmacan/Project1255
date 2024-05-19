@@ -6,7 +6,9 @@ public class Task {
     private String stationID; //hangi stationda execute olacağı
     private String status;  //wait,execute,complete
 
-
+    public String toString() {
+        return taskType+" Size: "+taskSize;
+    }
     public Task(){
 
     }
