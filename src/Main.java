@@ -56,7 +56,13 @@ public class Main {
 
         // Generate and print simulation report
         reportGenerator.generateReport(completedJobs, overdueJobs);*/
-
+        /*Job job=new Job();
+        while( Job  job != null){
+            System.out.println(job.isDeadlinePassed());
+            System.out.println(job.jobStateTrack());
+            System.out.println(job.calculateJobDuration());
+        }
+*/
 
     }
 
