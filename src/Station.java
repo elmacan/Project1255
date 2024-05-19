@@ -1,11 +1,16 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+
 public class Station {
     private String stationID;
     private int maxCapacity; //how many jobs it can do
     private boolean multiFlag; // station can do more than one job?
     private boolean fifoFlag;   //waiting tasks are picked using first come first served strategy or earliest job deadline first strategy.
     private List<StationTask> stationTasks = new ArrayList<>();
+    private Queue<Job> waitingQueue = new LinkedList<>();
+    private List<Job> jobsInExecution = new ArrayList<>();
 
 
     @Override
@@ -24,6 +29,9 @@ public class Station {
         this.maxCapacity = maxCapacity;
         this.multiFlag = multiFlag;
         this.fifoFlag = fifoFlag;
+    }
+    public void addStationTask(StationTask stationTask) {
+        this.stationTasks.add(stationTask);
     }
 
     public String getStationID() {
@@ -72,11 +80,10 @@ public class Station {
             if (stationTask.getTaskTypeID().equals(taskTypeID)) {
                 return stationTask;
             }
-            System.out.println("There is no such a task in this station!");
-            return null;
         }
+        System.out.println("There is no such a task in this station!");
+        return null;
     }
-}
 
     ///
 
@@ -153,6 +160,7 @@ public class Station {
         jobTypeTask.complete(); /// current taskde tamamlanan gidiyor
         processQueue();
     }*/
-
-
 }
+
+
+

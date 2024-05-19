@@ -20,6 +20,8 @@ public class StationTask {
         this.stationSpeed = stationSpeed;
         this.plusMinus = plusMinus;
     }
+
+
     public double calculateTaskDuration(double taskSize){
         double defaultspeed = stationSpeed;
         if(plusMinus != null){
@@ -57,5 +59,5 @@ public class StationTask {
 }
 
 
-}
+
 
