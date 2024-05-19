@@ -7,6 +7,7 @@ public class Station {
     private int maxCapacity; //how many jobs it can do
     private boolean multiFlag; // station can do more than one job?
     private boolean fifoFlag;   //waiting tasks are picked using first come first served strategy or earliest job deadline first strategy.
+    private List<StationTask> stationTasks=new ArrayList<>();
     private String status;
 
     //private List<StationTask> currentTasks = new ArrayList<StationTask>();  //?
