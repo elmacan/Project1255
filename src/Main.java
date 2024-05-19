@@ -56,9 +56,7 @@ public class Main {
 
         // Generate and print simulation report
         reportGenerator.generateReport(completedJobs, overdueJobs);
-        while(){
 
-        }
 
     }
 
