@@ -1,7 +1,10 @@
+import java.util.Random;
+
 public class StationTask {
     private String taskTypeID; //TaskType tasktype mı tam emin değilim
     private double stationSpeed; //station speed o task için
     private Double plusMinus;
+    private static final Random random = new Random();
 
     public double getPlusMinus() {
         return plusMinus;
@@ -10,8 +13,14 @@ public class StationTask {
     public void setPlusMinus(double plusMinus) {
         this.plusMinus = plusMinus;
     }
-    public static double calculateTaskDuration(Station station){
-        Station stationT = station.ge
+    public double calculateTaskDuration(double taskSize){
+        double defaultspeed = stationSpeed;
+        if(plusMinus != null){
+            double min = stationSpeed*(1-plusMinus/100.0);
+            double max= stationSpeed*(1+plusMinus/100.0);
+            defaultspeed=min+(max-min)*random.nextDouble();
+        }
+        return taskSize/defaultspeed;
     }
 
 
@@ -21,5 +30,13 @@ public class StationTask {
 
     public void setTaskTypeID(String taskTypeID) {
         this.taskTypeID = taskTypeID;
+    }
+
+    public double getStationSpeed() {
+        return stationSpeed;
+    }
+
+    public void setStationSpeed(double stationSpeed) {
+        this.stationSpeed = stationSpeed;
     }
 }
