@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -45,6 +45,17 @@ public class Main {
         }
 
         //fileParser.printFile();
+        // Create FileParser and ReportGenerator instances
+
+        FileParser fileParser2 = new FileParser();
+        ReportGenerator reportGenerator = new ReportGenerator();
+
+        // Parse job file and get completed and overdue jobs
+        List<Job> completedJobs = fileParser2.parseJobFile(jobFileName);
+        List<Job> overdueJobs = fileParser2.getOverdueJobs(); // Ensure this method is implemented in FileParser
+
+        // Generate and print simulation report
+        reportGenerator.generateReport(completedJobs, overdueJobs);
 
 
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Calendar;
 
 public class FileParser {
     private static ArrayList<String> stringTaskTypesInText = new ArrayList<>(); //tasktype line parçaları
@@ -12,7 +13,18 @@ public class FileParser {
     private static ArrayList<Job> jobsInText = new ArrayList<>();   //job objeleri
     private static HashMap<String, String> taskInfo = new HashMap<String, String>();  //tasktype linedaki task type ve size
     private static List<TaskType> taskTypesInText= new ArrayList<>();
-
+    private List<Job> parsedJobs;
+    public FileParser() {
+        this.parsedJobs = new ArrayList<>();
+    }
+    public List<Job> parseJobFile(String fileName) {
+        // Implement the logic to parse the job file with the given file name
+        // Create a File object from the file name and parse it
+        File jobFile = new File(fileName);
+        // Implement parsing logic...
+        // Return the list of parsed jobs
+        return parsedJobs;
+    }
 
     public static ArrayList<String> getStringTaskTypesInText() {
         return stringTaskTypesInText;
@@ -307,4 +319,30 @@ public class FileParser {
     }
 
 
+    public List<Job> getOverdueJobs() {
+        List<Job> overdueJobs = new ArrayList<>();
+        int currentTime = getCurrentTime(); // Method to get current time, implement as needed
+
+        for (Job job : parsedJobs) {
+            if (job.getCompleteTime() > job.getDeadline()) {
+                overdueJobs.add(job);
+            }
+        }
+
+        return overdueJobs;
+    }
+
+    private int getCurrentTime() {
+        // Get the current system time using Calendar
+        Calendar currentTime = Calendar.getInstance();
+
+        // Extract the hour and minute from the current time
+        int hour = currentTime.get(Calendar.HOUR_OF_DAY); // 24-hour clock
+        int minute = currentTime.get(Calendar.MINUTE);
+
+        // Convert the current time to minutes since midnight
+        int currentTimeInMinutes = hour * 60 + minute;
+
+        return currentTimeInMinutes;
+    }
 }
