@@ -1,25 +1,82 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
 public class Station {
     private String stationID;
     private int maxCapacity; //how many jobs it can do
     private boolean multiFlag; // station can do more than one job?
     private boolean fifoFlag;   //waiting tasks are picked using first come first served strategy or earliest job deadline first strategy.
-    private List<StationTask> stationTasks=new ArrayList<>();
-    private String status;
+    private List<StationTask> stationTasks = new ArrayList<>();
 
 
-    public StationTask getStationTaskByID(String taskTypeID){
-        for(StationTask stationTask: stationTasks) {
-            if(stationTask.getTaskTypeID().equals(taskTypeID)) {
+    @Override
+    public String toString() {
+
+        return stationID +
+                "  maxCapacity: " + maxCapacity +
+                "  multiFlag: " + multiFlag +
+                "  fifoFlag: " + fifoFlag +
+                " " + stationTasks;
+
+    }
+
+    public Station(String stationID, int maxCapacity, boolean multiFlag, boolean fifoFlag) {
+        this.stationID = stationID;
+        this.maxCapacity = maxCapacity;
+        this.multiFlag = multiFlag;
+        this.fifoFlag = fifoFlag;
+    }
+
+    public String getStationID() {
+        return stationID;
+    }
+
+    public void setStationID(String stationID) {
+        this.stationID = stationID;
+    }
+
+    public int getMaxCapacity() {
+        return maxCapacity;
+    }
+
+    public void setMaxCapacity(int maxCapacity) {
+        this.maxCapacity = maxCapacity;
+    }
+
+    public boolean isMultiFlag() {
+        return multiFlag;
+    }
+
+    public void setMultiFlag(boolean multiFlag) {
+        this.multiFlag = multiFlag;
+    }
+
+    public boolean isFifoFlag() {
+        return fifoFlag;
+    }
+
+    public void setFifoFlag(boolean fifoFlag) {
+        this.fifoFlag = fifoFlag;
+    }
+
+    public List<StationTask> getStationTasks() {
+        return stationTasks;
+    }
+
+    public void setStationTasks(List<StationTask> stationTasks) {
+        this.stationTasks = stationTasks;
+    }
+
+
+    public StationTask getStationTaskByID(String taskTypeID) {
+        for (StationTask stationTask : stationTasks) {
+            if (stationTask.getTaskTypeID().equals(taskTypeID)) {
                 return stationTask;
             }
             System.out.println("There is no such a task in this station!");
             return null;
         }
     }
+}
 
     ///
 
@@ -27,7 +84,7 @@ public class Station {
 
     //private List<StationTask> currentTasks = new ArrayList<StationTask>();  //?
     //private List<StationTask> waitingTasks = new ArrayList<StationTask>();  //?
-    //private List<StationTask> completedTasks; //?
+
 
 
     // maxcapacitye ulaşılmamışsa task ekle
@@ -98,83 +155,4 @@ public class Station {
     }*/
 
 
-    public String getStationID() {
-        return stationID;
-    }
-
-    public void setStationID(String stationID) {
-        this.stationID = stationID;
-    }
-
-    public int getMaxCapacity() {
-        return maxCapacity;
-    }
-
-    public void setMaxCapacity(int maxCapacity) {
-        this.maxCapacity = maxCapacity;
-    }
-
-    public boolean isMultiFlag() {
-        return multiFlag;
-    }
-
-    public void setMultiFlag(boolean multiFlag) {
-        this.multiFlag = multiFlag;
-    }
-
-    public boolean isFifoFlag() {
-        return fifoFlag;
-    }
-
-    public void setFifoFlag(boolean fifoFlag) {
-        this.fifoFlag = fifoFlag;
-    }
-
-    public double getSpeedForThatTask() {
-        return speedForThatTask;
-    }
-
-    public void setSpeedForThatTask(double speedForThatTask) {
-        this.speedForThatTask = speedForThatTask;
-    }
-
-    public double getPlusMinus() {
-        return plusMinus;
-    }
-
-    public void setPlusMinus(double plusMinus) {
-        this.plusMinus = plusMinus;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public ArrayList<JobTypeTask> getCurrentTasks() {
-        return currentTasks;
-    }
-
-    public void setCurrentTasks(ArrayList<JobTypeTask> currentJobTypeTasks) {
-        this.currentTasks = currentJobTypeTasks;
-    }
-
-    public ArrayList<JobTypeTask> getWaitingTasks() {
-        return waitingTasks;
-    }
-
-    public void setWaitingTasks(ArrayList<JobTypeTask> waitingJobTypeTasks) {
-        this.waitingTasks = waitingJobTypeTasks;
-    }
-
-    public List<String> getCompletedTasks() {
-        return completedTasks;
-    }
-
-    public void setCompletedTasks(List<String> completedTasks) {
-        this.completedTasks = completedTasks;
-    }
 }

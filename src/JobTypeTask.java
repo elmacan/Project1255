@@ -18,7 +18,7 @@ public class JobTypeTask {
 
 
 //---------------------------------------
-    public void start(double speed, String stationID) {
+   /* public void start(double speed, String stationID) {
         this.duration = taskSize / speed;
         this.status = "execute";
         this.stationID = stationID;
@@ -31,7 +31,7 @@ public class JobTypeTask {
 
 
 
-
+*/
 
     public String getTaskType() {
         return taskType;
