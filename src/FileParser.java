@@ -12,7 +12,7 @@ public class FileParser {
     private static ArrayList<Station> stationsInText = new ArrayList<>();  //station objeleri
     private static ArrayList<Job> jobsInText = new ArrayList<>();   //job objeleri
     private static HashMap<String, String> taskInfo = new HashMap<String, String>();  //tasktype linedaki task type ve size
-    private static List<TaskType> taskTypesInText= new ArrayList<>();
+    private static List<TaskType> taskTypesInText = new ArrayList<>();
     private List<Job> parsedJobs;
     public FileParser() {
         this.parsedJobs = new ArrayList<>();

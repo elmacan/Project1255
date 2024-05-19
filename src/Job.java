@@ -1,3 +1,5 @@
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Job {
@@ -10,6 +12,7 @@ public class Job {
     private String status;
     private int currentTaskIndex;
     private JobTypeTask currentJobTypeTask;
+
 
 
 
@@ -168,4 +171,6 @@ public class Job {
     public void setCurrentTaks(JobTypeTask currentTaks) {
         this.currentJobTypeTask = currentTaks;
     }
+
+
 }
