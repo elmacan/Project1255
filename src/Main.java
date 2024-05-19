@@ -23,6 +23,9 @@ public class Main {
         Validator validator=new Validator();
         validator.fileControl(workFileName,jobFileName);
 
+        WorkFlowFile workFlowFile=new WorkFlowFile();
+
+
         FileParser fileParser = new FileParser();
         fileParser.printFileInfo();
 

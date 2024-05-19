@@ -14,6 +14,7 @@ public class Validator {
 
 
 
+
     public void addError(String error) {
         errorCollector.add(error);
     }
@@ -27,7 +28,7 @@ public class Validator {
     }
 
     public boolean isNumber(String str) {
-        // Regular expression to match numbers (integer or decimal)     //burda negatif olmasına göre exception atabiliyor muyuz????????????????
+        // Regular expression to match numbers (integer or decimal)
         String regex = "\\-?[0-9]*[.]?[0-9]*";   //doğru regex
 
         // Compile the regular expression
@@ -82,14 +83,14 @@ public class Validator {
         return str.indexOf(')') != -1;
     }
     public void fileControl(String workFileName, String jobFileName) {
-        File workFlowFile = new File(workFileName);
-        File jobFile = new File(jobFileName);
+        File workFlowTextFile = new File(workFileName);
+        File jobTextFile = new File(jobFileName);
 
         boolean errorOccured = false;
 
 
         try {
-            if (!workFlowFile.exists() || !workFlowFile.canRead()) {
+            if (!workFlowTextFile.exists() || !workFlowTextFile.canRead()) {
 
                 throw new IOException(workFileName + " doesn't exists or is not readable!");
 
@@ -104,7 +105,7 @@ public class Validator {
 
         }
         try {
-            if (!jobFile.exists() || !jobFile.canRead()) {
+            if (!jobTextFile.exists() || !jobTextFile.canRead()) {
 
                 throw new IOException(jobFileName + " doesn't exists or is not readable!");
             }
@@ -117,13 +118,14 @@ public class Validator {
 
         }
 
-        if(isCorrectWorkFileFormat(workFlowFile)&&!this.hasErrors()) {
+        if(isCorrectWorkFileFormat(workFlowTextFile)&&!this.hasErrors()) {
             System.out.println("---------------------------");
             System.out.println("Correct WorkFlowFile Format");
+            System.out.println("---------------------------");
 
         }
 
-        fileParser.parseJobFile(jobFile);
+
 
 
 
@@ -136,7 +138,8 @@ public class Validator {
 
     }
 
-    public  boolean isCorrectWorkFileFormat(File workFlowFile){
+    public  boolean isCorrectWorkFileFormat(File workFlowTextFile){
+        WorkFlowFile workFlowFile= new WorkFlowFile();
         int lineCounter=0;
 
         int countIndex=0;
@@ -146,7 +149,7 @@ public class Validator {
         Scanner workScanner = null;
 
         try {
-            workScanner = new Scanner(workFlowFile);
+            workScanner = new Scanner(workFlowTextFile);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -160,8 +163,9 @@ public class Validator {
             System.out.println("Line: " + line);
 
             if (line.startsWith("(TASKTYPES ")) {
-                String[] pieces=line.split(" ");
-                fileParser.parseTaskTypes(pieces,line);
+               // String[] pieces=line.split(" ");
+                workFlowFile.getLineFromText(line);
+                //fileParser.parseTaskTypes(pieces,line);
                 String splittedline=line.replaceAll("\\s", "");//tüm boşlukları çıkarıyor
                 taskTypesFound = true;
                 if (!splittedline.matches("^\\(TASKTYPES(\\w[.]?)*\\)$")) {
@@ -176,8 +180,9 @@ public class Validator {
 
                     line = workScanner.nextLine();
                     lineCounter++;
-                    String[] pieces=line.split(" ");
-                    fileParser.parseJobTypes(pieces,countIndex,lineCounter);
+                   // String[] pieces=line.split(" ");
+                   // workFlowFile.getLineFromText(line,countIndex,lineCounter);
+                    //fileParser.parseJobTypes(pieces,countIndex,lineCounter);
                     countIndex++;
                     System.out.println("line: "+line);
                     String splittedline = line.replaceAll("\\s", "");//boşlukları çıkarıyor

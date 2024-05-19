@@ -5,37 +5,6 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class FileParser {
-    private static ArrayList<String> taskTypesInText = new ArrayList<>();
-    private static ArrayList<JobType> jobTypesInText = new ArrayList<>();
-    private static ArrayList<Station> stationsInText = new ArrayList<>();
-    private static ArrayList<Job> jobsInText = new ArrayList<>();
-    private static HashMap<String, String> taskInfo = new HashMap<String, String>();
-    //private ArrayList<String> types_jt = new ArrayList<>();
-    //private ArrayList<String>sizes_jt=new ArrayList<>();
-
-    public static ArrayList<String> getTaskTypesInText() {
-        return taskTypesInText;
-    }
-
-    public static void setTaskTypesInText(ArrayList<String> taskTypesInText) {
-        FileParser.taskTypesInText = taskTypesInText;
-    }
-
-    public static ArrayList<JobType> getJobTypesInText() {
-        return jobTypesInText;
-    }
-
-    public static void setJobTypesInText(ArrayList<JobType> jobTypesInText) {
-        FileParser.jobTypesInText = jobTypesInText;
-    }
-
-    public static ArrayList<Station> getStationsInText() {
-        return stationsInText;
-    }
-
-    public static void setStationsInText(ArrayList<Station> stationsInText) {
-        FileParser.stationsInText = stationsInText;
-    }
 
     public static String[] splitStringBySpacesWithoutParentheses(String str) {
         if (str == null || str.isEmpty()) {
