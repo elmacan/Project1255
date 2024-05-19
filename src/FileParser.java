@@ -2,23 +2,23 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 public class FileParser {
-    private static ArrayList<String> taskTypesInText = new ArrayList<>();
+    private static ArrayList<String> stringTaskTypesInText = new ArrayList<>();
     private static ArrayList<JobType> jobTypesInText = new ArrayList<>();
     private static ArrayList<Station> stationsInText = new ArrayList<>();
     private static ArrayList<Job> jobsInText = new ArrayList<>();
     private static HashMap<String, String> taskInfo = new HashMap<String, String>();
-    //private ArrayList<String> types_jt = new ArrayList<>();
-    //private ArrayList<String>sizes_jt=new ArrayList<>();
+    private static List<TaskType> taskTypesInText= new ArrayList<>();
 
-    public static ArrayList<String> getTaskTypesInText() {
-        return taskTypesInText;
+    public static ArrayList<String> getStringTaskTypesInText() {
+        return stringTaskTypesInText;
     }
 
-    public static void setTaskTypesInText(ArrayList<String> taskTypesInText) {
-        FileParser.taskTypesInText = taskTypesInText;
+    public static void setStringTaskTypesInText(ArrayList<String> stringTaskTypesInText) {
+        FileParser.stringTaskTypesInText = stringTaskTypesInText;
     }
 
     public static ArrayList<JobType> getJobTypesInText() {
@@ -50,6 +50,7 @@ public class FileParser {
 
         pieces = splitStringBySpacesWithoutParentheses(line);
 
+
         for (String s : pieces) {
 
             if (validator.iscontainsClosingParenthesis(s)) {
@@ -59,28 +60,28 @@ public class FileParser {
 
             }
             if (!s.contains("(") && !s.contains(")") && !s.contains("(TASKTYPES")) {
-                taskTypesInText.add(s);
+                stringTaskTypesInText.add(s);
             }
 
         }
 
 
-        for (int i = 1; i < taskTypesInText.size(); i++) {
+        for (int i = 1; i < stringTaskTypesInText.size(); i++) {
 
-            if (!validator.isNumber(taskTypesInText.get(i))) {
+            if (!validator.isNumber(stringTaskTypesInText.get(i))) {
 
-                if (i + 1 < taskTypesInText.size() && validator.isNumber(taskTypesInText.get(i + 1))) {
+                if (i + 1 < stringTaskTypesInText.size() && validator.isNumber(stringTaskTypesInText.get(i + 1))) {
 
-                    taskInfo.put(taskTypesInText.get(i), taskTypesInText.get(i + 1));
+                    taskInfo.put(stringTaskTypesInText.get(i), stringTaskTypesInText.get(i + 1));
                 } else {
-                    taskInfo.put(taskTypesInText.get(i), " ");
+                    taskInfo.put(stringTaskTypesInText.get(i), " ");
                 }
-                if (!validator.isValidID(taskTypesInText.get(i))) {
+                if (!validator.isValidID(stringTaskTypesInText.get(i))) {
                     validator.addError(i + " is an invalid taskTypeID");
 
                 }
-                if (!validator.isUniqueID(taskTypesInText.get(i))) {
-                    validator.addError(taskTypesInText.get(i) + "is listed more than once");
+                if (!validator.isUniqueID(stringTaskTypesInText.get(i))) {
+                    validator.addError(stringTaskTypesInText.get(i) + "is listed more than once");
 
                 }
 
@@ -88,15 +89,15 @@ public class FileParser {
             }
 
 
-            if (validator.isNumber(taskTypesInText.get(i))) {
-                if (validator.isNegativeSize(taskTypesInText.get(i))) {
-                    validator.addError(taskTypesInText.get(i - 1) + " has a negative size: " + taskTypesInText.get(i));
+            if (validator.isNumber(stringTaskTypesInText.get(i))) {
+                if (validator.isNegativeSize(stringTaskTypesInText.get(i))) {
+                    validator.addError(stringTaskTypesInText.get(i - 1) + " has a negative size: " + stringTaskTypesInText.get(i));
                 }
             }
 
         }
 
-        if (validator.isNumber(taskTypesInText.get(0))) {
+        if (validator.isNumber(stringTaskTypesInText.get(0))) {
             validator.addError("Line 1 : TaskTypes information starts with a number");
 
         }
@@ -157,23 +158,23 @@ public class FileParser {
         for (int i = 1; i < realPieces.size(); i++) {
             if (!validator.isNumber(realPieces.get(i))) {
                 if (validator.isValidID(realPieces.get(i))) {
-                    Task task = new Task();
-                    task.setTaskType(realPieces.get(i));
-                    jobtype.getTasks().add(task);
+                    JobTypeTask jobTypeTask = new JobTypeTask();
+                    jobTypeTask.setTaskType(realPieces.get(i));
+                    jobtype.getTasks().add(jobTypeTask);
 
                     if ((i + 1 < realPieces.size()) && (validator.isNumber(realPieces.get(i + 1)))) {
 
-                        task.setTaskSize(Double.parseDouble(realPieces.get(i + 1)));
+                        jobTypeTask.setTaskSize(Double.parseDouble(realPieces.get(i + 1)));
                         //job.getTasks().add(task);
                     } else {
 
-                        if (findDefaultSizeOfTaskType(realPieces.get(i), taskTypesInText) == -1) {
+                        if (findDefaultSizeOfTaskType(realPieces.get(i), stringTaskTypesInText) == -1) {
                             validator.addError("Line " + lineCounter + ": " + realPieces.get(i) + " has no default size, either a default size must be declared in TASKTYPE" +
                                     "list or the size must be declared within the job");
 
                         } else {
 
-                            task.setTaskSize(findDefaultSizeOfTaskType(realPieces.get(i), taskTypesInText));
+                            jobTypeTask.setTaskSize(findDefaultSizeOfTaskType(realPieces.get(i), stringTaskTypesInText));
                             //job.getTasks().add(task);
                         }
                     }

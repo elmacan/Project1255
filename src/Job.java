@@ -9,7 +9,7 @@ public class Job {
     private int completeTime; //job ın complete olduğu zaman
     private String status;
     private int currentTaskIndex;
-    private Task currentTask;
+    private JobTypeTask currentJobTypeTask;
 
 
 
@@ -51,14 +51,14 @@ public class Job {
 
     public void calculateJobDuration(List<Station> stations) {
         double totalDuration = 0;
-        for (Task task : jobType.getTasks()) {
-            Station station = findAvailableStationForTask(task, stations);
+        for (JobTypeTask jobTypeTask : jobType.getTasks()) {
+            Station station = findAvailableStationForTask(jobTypeTask, stations);
             if (station != null) {
                 double speed = station.getSpeedForThatTask();
                 if (station.getPlusMinus() > 0) {
                     speed = station.getRandomSpeed();
                 }
-                double taskDuration = task.getTaskSize() / speed;
+                double taskDuration = jobTypeTask.getTaskSize() / speed;
                 totalDuration += taskDuration;
             }
         }
@@ -68,9 +68,9 @@ public class Job {
 
     }
 
-    private Station findAvailableStationForTask(Task task, List<Station> stations) {
+    private Station findAvailableStationForTask(JobTypeTask jobTypeTask, List<Station> stations) {
         for (Station station : stations) {
-            if (station.canHandleTaskType(task.getTaskType())) {
+            if (station.canHandleTaskType(jobTypeTask.getTaskType())) {
                 return station;
             }
         }
@@ -161,11 +161,11 @@ public class Job {
         this.currentTaskIndex = currentTaskIndex;
     }
 
-    public Task getCurrentTaks() {
-        return currentTask;
+    public JobTypeTask getCurrentTaks() {
+        return currentJobTypeTask;
     }
 
-    public void setCurrentTaks(Task currentTaks) {
-        this.currentTask = currentTaks;
+    public void setCurrentTaks(JobTypeTask currentTaks) {
+        this.currentJobTypeTask = currentTaks;
     }
 }
