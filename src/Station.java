@@ -10,6 +10,17 @@ public class Station {
     private List<StationTask> stationTasks=new ArrayList<>();
     private String status;
 
+
+    public StationTask getStationTaskByID(String taskTypeID){
+        for(StationTask stationTask: stationTasks) {
+            if(stationTask.getTaskTypeID().equals(taskTypeID)) {
+                return stationTask;
+            }
+            System.out.println("There is no such a task in this station!");
+            return null;
+        }
+    }
+
     //private List<StationTask> currentTasks = new ArrayList<StationTask>();  //?
     //private List<StationTask> waitingTasks = new ArrayList<StationTask>();  //?
     //private List<StationTask> completedTasks; //?
