@@ -3,6 +3,8 @@ public class JobTypeTask {
     private double taskSize;
     private String status; // add this field
 
+
+
     public String toString() {
         return taskType+" Size: "+taskSize;
     }
